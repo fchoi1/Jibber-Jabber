@@ -24,14 +24,16 @@ const submitForm = async (event) => {
     email: '',
     password: ''
   });
-
+  // Returns this layout on user/client request
   return (
     <main>
       <div>
         <div className="card">
           <h4 className="card-header">Login</h4>
           <div className="card-body"></div>
+          {/* Login form   */}
           <form onSubmit={submitForm}>
+            {/* Client email input render */}
             <input
               className="form-input"
               placeholder="Enter email"
@@ -41,6 +43,20 @@ const submitForm = async (event) => {
               value={formState.email}
               onChange={handleFormChange}
             />
+            {/* Client password input render*/}
+            <input
+              className="form-input"
+              placeholder="******"
+              name="password"
+              type="password"
+              id="password"
+              value={formState.password}
+              onChange={handleFormChange}
+            />
+            {/* A button to submit, because who doesnt love buttons.*/}
+            <button className="btn" type="submit">
+              Submit
+            </button>
           </form>
         </div>
       </div>
