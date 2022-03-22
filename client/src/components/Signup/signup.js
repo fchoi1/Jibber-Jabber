@@ -48,7 +48,7 @@ const Signup = () => {
           <div className="card-body">
             <form onSubmit={formSubmit}>
               <input
-                {/* Client username input register */}
+                // {/* Client username input register */}
                 className="form-input"
                 placeholder="Your username"
                 name="username"
@@ -58,7 +58,7 @@ const Signup = () => {
                 onChange={handleChange}
               />
               <input
-                {/* Client email input register */}
+                // {/* Client email input register */}
                 className="form-input"
                 placeholder="Your email"
                 name="email"
@@ -68,7 +68,7 @@ const Signup = () => {
                 onChange={handleChange}
               />
               <input
-                {/* Client password input register */}
+                // {/* Client password input register */}
                 className="form-input"
                 placeholder="******"
                 name="password"
@@ -77,7 +77,7 @@ const Signup = () => {
                 value={formState.password}
                 onChange={handleChange}
               />
-                {/* Button! */}
+              {/* Button! */}
               <button className="btn" type="submit">
                 Submit
               </button>
