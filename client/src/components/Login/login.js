@@ -1,5 +1,5 @@
 // Imports
-import rect, { useState } from 'react';
+import React, { useState } from 'react';
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
