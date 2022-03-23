@@ -15,5 +15,12 @@ const typeDefs = gql`
     textContent: String
     timeStamp: Int
   }
+
+  type Chat {
+    _id: ID
+    name: String
+    messages: [Message]
+    users: [User]
+  }
 `;
 module.exports = typeDefs;
