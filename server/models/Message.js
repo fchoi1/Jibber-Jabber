@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose');
+const { Schema } = require('mongoose');
 
-const messageSchema = new Schema({
+const MessageSchema = new Schema({
   user: {
     type: String,
     required: true
@@ -15,4 +15,4 @@ const messageSchema = new Schema({
   }
 });
 
-module.exports = messageSchema;
+module.exports = MessageSchema;

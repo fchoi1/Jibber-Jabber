@@ -16,7 +16,7 @@ const typeDefs = gql`
     timeStamp: Int
   }
 
-  type Chat {
+  type Channel {
     _id: ID
     name: String
     messages: [Message]
