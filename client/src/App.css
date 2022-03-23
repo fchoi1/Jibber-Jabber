@@ -1,6 +1,5 @@
-#page-container {
-  position: relative;
-  min-height: 100vh;
+:root {
+  --footer-height: 2.5rem;
 }
 
 #page-container {
@@ -9,5 +8,12 @@
 }
 
 #content-wrap {
-  padding-bottom: 2.5rem;    /* Footer height */
+  padding-bottom: var(--footer-height); /* Footer height */
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: var(--footer-height); /* Footer height */
 }
