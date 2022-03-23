@@ -1,49 +1,58 @@
-// Page imports.
-const { AuthenticationError } = require('apollo-server-express');
-const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require("apollo-server-express");
+const {User, Message, Channel} = require("../models")
 
-// Queries - obtains information.
+
 const resolvers = {
-  Query: {
-    me: async (parent, args, context) => {}
-  },
-  users: async () => {
-    return User.find();
-  },
-  user: async (parent, { username }) => {
-    return User.findOne({ username });
-  },
-  // Mutations - creates, updates or deletes.
-  Mutation: {
-    // New user logic.
-    addUser: async (parent, args) => {
-      const user = await User.create(args);
-      const token = signToken(user);
-
-      // Returns created info.
-      return { user, token };
+    Query: {
+        users:async(p,{username})=>{
+            const params = username ? {username} : {}
+            return User.find(params);
+        },
+        channels: async(p,args)=>{
+            return Channel.find({}).populate("users messages")
+        },
+        messages: async(p,args)=>{
+            return Message.find({})
+        },
+        deleteChannels: async(p,args)=>{
+            return Channel.deleteMany({})
+        },
+        deleteMessages:async(p,args)=>{
+            return Message.deleteMany({})
+        }
     },
-    // Login logic.
-    login: async (email, password) => {
-      const user = await User.findOne({ email });
-
-      // Throws an error if user input is incorrect or no user has been created with attempted login credentials
-      if (!user) {
-        throw new AuthenticationError('No user found.');
-      }
-
-      const loginPassword = await user.correctPassword(password);
-
-      // Throws an error if password is incorrect
-      if (!loginPassword) {
-        throw new AuthenticationError('Password is invalid.');
-      }
-
-      const token = signToken(user);
-      // Returns the login info.
-      return { token, user };
+    Mutation:{
+        addUser: async(parent,args)=>{
+            const user = await User.create(args)
+            //jwt token stuff goes here
+            return user;
+        },
+        login: async(parent,{email, password} )=>{
+            const user = await User.findOne({ email })
+            if(!user){
+              return new AuthenticationError("Incorrect Credentials!!")
+            }
+            const correctPw = await user.isCorrectPassword(password);
+            if(!correctPw){
+              return new AuthenticationError("Invalid Credentials")
+            }
+            //JWT stuff goes here
+            return user;
+          },
+          createChannel: async(parent,{users})=>{
+              return Channel.create({users:users})
+          },
+          sendMessage: async(parent,{_id,textValue,senderId})=>{
+              //we will first create a message get id and then grab the value from the message table
+            const msgId = await Message.create({textValue:textValue,sender:senderId})
+            //we can use the textvalue to update the channel
+            return Channel.findOneAndUpdate({_id},{$push:{messages:msgId}})
+               
+              //return Channel.updateOne({_id},{$push:{messages:{}}})
+          },
+          createMessage: async(p,args)=>{
+              return Message.create(args)
+          }
     }
-  }
-};
-
-module.exports = resolvers;
+}
+module.exports = resolvers
