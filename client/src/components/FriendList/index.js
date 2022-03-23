@@ -8,12 +8,12 @@ const FriendList = () => {
     <Box>
       <h1>Friend lists</h1>
       <List alignitems="flex-start">
-        <FriendListItem name="Remy Sharp" isOnline="false" />
-        <Divider variant="inset" component="li" />
+        <FriendListItem name="Remy Sharp" isOnline={false} />
+        <Divider/>
         <FriendListItem name="Bob Dillion" isOnline={true} />
-        <Divider variant="inset" component="li" />
-        <FriendListItem name="Richard Smith" isOnline="false" />
-        <Divider variant="inset" component="li" />
+        <Divider/>
+        <FriendListItem name="Richard Smith" isOnline={false} />
+        <Divider />
       </List>
     </Box>
   );

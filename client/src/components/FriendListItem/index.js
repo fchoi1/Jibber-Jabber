@@ -50,9 +50,10 @@ const FriendListItem = (props) => {
           <Avatar alt={name} src="/static/images/avatar/1.jpg" />
         </StyledBadge>
       </ListItemAvatar>
-      <ListItemText>
-        <h3>{name}</h3>
-      </ListItemText>
+      <ListItemText
+        primary={name}
+        sx={{ display: { xs: 'none', sm: 'block' } }}
+      />
     </ListItem>
   );
 };
