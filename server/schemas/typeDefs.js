@@ -6,6 +6,7 @@ const typeDefs = gql`
     type Message{
         _id:ID
         textValue:String
+        sender: User
     }
 
     type Channel{
@@ -39,7 +40,7 @@ const typeDefs = gql`
         addUser(username:String!, email:String!, password:String!): User
         login(email:String!,password:String!):User
         createChannel(users:[Userss]!, messages:[Messagess]!): Channel
-        sendMessage(_id:ID,textValue:String!):Channel
+        sendMessage(_id:ID,textValue:String!,senderId:Userss!):Channel
         createMessage(textValue:String!): Message
     }
 `

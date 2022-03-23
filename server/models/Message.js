@@ -6,6 +6,10 @@ const messageSchema = new Schema({
     textValue:{
         type:String,
         trim: true
+    },
+    sender:{
+        type:Schema.Types.ObjectId,
+        ref:"user"
     }
 
 })

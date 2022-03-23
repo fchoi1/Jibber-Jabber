@@ -42,9 +42,9 @@ const resolvers = {
           createChannel: async(parent,{users,messages})=>{
               return Channel.create({users:users,messages:messages})
           },
-          sendMessage: async(parent,{_id,textValue})=>{
+          sendMessage: async(parent,{_id,textValue,senderId})=>{
               //we will first create a message get id and then grab the value from the message table
-            const msgId = await Message.create({textValue:textValue})
+            const msgId = await Message.create({textValue:textValue,sender:senderId})
             //we can use the textvalue to update the channel
             return Channel.findOneAndUpdate({_id},{$push:{messages:msgId}})
                
