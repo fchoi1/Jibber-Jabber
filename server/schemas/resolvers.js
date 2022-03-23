@@ -39,8 +39,8 @@ const resolvers = {
             //JWT stuff goes here
             return user;
           },
-          createChannel: async(parent,{users,messages})=>{
-              return Channel.create({users:users,messages:messages})
+          createChannel: async(parent,{users})=>{
+              return Channel.create({users:users})
           },
           sendMessage: async(parent,{_id,textValue,senderId})=>{
               //we will first create a message get id and then grab the value from the message table
