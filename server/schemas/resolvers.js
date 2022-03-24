@@ -40,7 +40,19 @@ const resolvers = {
             return user;
           },
           createChannel: async(parent,{users})=>{
-              return Channel.create({users:users})
+              const channelData =  await Channel.create({users:users})
+              console.log(channelData._id)
+              return users.map(u=>{
+                  console.log(u._id)
+                  const userData = User.findByIdAndUpdate({_id:u._id},{
+                      $push:{
+                          channelModel :channelData
+                      }
+                      
+                  },{new:true})
+
+                  //console.log(userData.channelModel)
+              })
           },
           sendMessage: async(parent,{_id,textValue,senderId})=>{
               //we will first create a message get id and then grab the value from the message table
