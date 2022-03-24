@@ -5,15 +5,24 @@ import FriendList from '../components/FriendList';
 import FriendListMobile from '../components/FriendListMobile';
 
 import { Box, Grid } from '@mui/material';
+import './home.css';
 
 const Home = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 12 }}>
         <Grid
+          className="mobileFriendList"
           item
+          pl={0}
           xs={12}
-          sx={{ display: { xs: 'block', sm: 'none' }, border: 'solid' }}
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            border: 'solid',
+            minHeight: 0,
+            minWidth: 0,
+            padding: 0
+          }}
         >
           <FriendListMobile />
         </Grid>

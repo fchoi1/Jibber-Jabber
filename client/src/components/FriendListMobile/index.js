@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Divider, ListItem, List } from '@mui/material';
+import { Stack, Divider } from '@mui/material';
 import ScrollContainer from 'react-indiana-drag-scroll';
 
 import FriendListItem from '../FriendListItem';
@@ -22,6 +22,9 @@ const FriendListMobile = () => {
           <FriendListItem name="Bob Dillion" isOnline={true} />
         </div>
 
+        <div>
+          <FriendListItem name="Richard Smith" isOnline={false} />
+        </div>
         <div>
           <FriendListItem name="Richard Smith" isOnline={false} />
         </div>
