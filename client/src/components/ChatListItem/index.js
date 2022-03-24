@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   ListItem,
-  ListItemAvatar,
   AvatarGroup,
   Avatar,
   ListItemText,
@@ -45,25 +44,29 @@ const ChatListItem = (props) => {
   console.log(usersList);
 
   return (
-    <ListItem>
-      <AvatarGroup max={4}>
+    <ListItem alignItems="flex-start">
+      <AvatarGroup max={4} sx={{pr: 1}}>
         {usersList.map((user) => (
-          <ListItemAvatar key={user.name}>
-            <StyledBadge
-              overlap="circular"
-              color={user.isOnline ? 'primary' : 'secondary'}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              variant="dot"
-            >
-              <Avatar alt={user.name} src="/static/images/avatar/1.jpg" />
-            </StyledBadge>
-          </ListItemAvatar>
+          <StyledBadge
+            key={user.name}
+            overlap="circular"
+            color={user.isOnline ? 'primary' : 'secondary'}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            variant="dot"
+          >
+            <Avatar alt={user.name} src="/static/images/avatar/1.jpg" />
+          </StyledBadge>
         ))}
       </AvatarGroup>
 
       <ListItemText
         primary={channel.channelName}
-        sx={{ display: { xs: 'none', sm: 'block' } }}
+        secondary={
+          <>
+            <strong>{channel.messages.sender}</strong> -{' '}
+            {channel.messages.textValue}
+          </>
+        }
       />
     </ListItem>
   );

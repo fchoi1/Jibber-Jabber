@@ -1,10 +1,10 @@
 import React from 'react';
-import { List } from '@mui/material';
+import { Divider, List } from '@mui/material';
 
 import ChatListItem from '../ChatListItem';
 
 const ChatList = () => {
-  const channel = {
+  const channel1 = {
     users: [
       { name: 'John', isOnline: true },
       { name: 'Bob', isOnline: true },
@@ -14,13 +14,31 @@ const ChatList = () => {
       { name: 'Lucas', isOnline: true },
       { name: 'Alex', isOnline: false }
     ],
+    messages: { sender: 'Bob', textValue: 'this is a test message' },
+
+    channelName: 'test Channel'
+  };
+
+  const channel2 = {
+    users: [
+      { name: 'John', isOnline: true },
+      { name: 'Bob', isOnline: true }
+    ],
+    messages: { sender: 'Bob', textValue: 'this is a test message' },
+
     channelName: 'test Channel'
   };
 
   return (
-    <List>
-      <ChatListItem channel={channel} />
+  <>
+    <h2 style={{paddingLeft: "16px"}}>Your recent chats!</h2>
+    <List dense={true}>
+      <ChatListItem channel={channel1} />
+      <Divider />
+      <ChatListItem channel={channel2} />
+      <Divider />
     </List>
+    </>
   );
 };
 export default ChatList;
