@@ -6,7 +6,7 @@ const resolvers = {
     Query: {
         users:async(p,{username})=>{
             const params = username ? {username} : {}
-            return User.find(params);
+            return await User.find(params).populate("channelModel");
         },
         channels: async(p,args)=>{
             return Channel.find({}).populate("users messages")
@@ -41,22 +41,19 @@ const resolvers = {
           },
           createChannel: async(parent,{users})=>{
               const channelData =  await Channel.create({users:users})
-              console.log(channelData._id)
-              return users.map(u=>{
-                  console.log(u._id)
-                  const userData = User.findByIdAndUpdate({_id:u._id},{
-                      $push:{
-                          channelModel :channelData
-                      }
-                      
-                  },{new:true})
+              console.log(channelData)
 
-                  //console.log(userData.channelModel)
-              })
+              const updatePromises = users.map(u => (
+              User.findOneAndUpdate({_id:u._id},{
+                    $push:{channelModel : channelData}  
+                },{new:true})
+            )) 
+            Promise.all(updatePromises).then(console.log).catch(console.error)
           },
           sendMessage: async(parent,{_id,textValue,senderId})=>{
               //we will first create a message get id and then grab the value from the message table
             const msgId = await Message.create({textValue:textValue,sender:senderId})
+            console.log(msgId)
             //we can use the textvalue to update the channel
             return Channel.findOneAndUpdate({_id},{$push:{messages:msgId}})
                
