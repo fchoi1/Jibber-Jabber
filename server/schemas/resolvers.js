@@ -9,10 +9,16 @@ const resolvers = {
             return await User.find(params).populate("channelModel");
         },
         channels: async(p,args)=>{
-            return Channel.find({}).populate("users messages")
+            return Channel.find({}).populate("users").populate({
+                
+                path:"messages",
+                populate:{
+                    path: "sender"
+                }
+            })
         },
         messages: async(p,args)=>{
-            return Message.find({})
+            return Message.find({}).populate("sender")
         },
         deleteChannels: async(p,args)=>{
             return Channel.deleteMany({})
