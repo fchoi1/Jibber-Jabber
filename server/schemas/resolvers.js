@@ -5,14 +5,20 @@ const resolvers = {
   Query: {
     users: async (p, { username }) => {
       const params = username ? { username } : {};
-      const userdata = await User.find(params).populate('channelModel');
-      return userdata;
+      return await User.find(params).populate('channelModel');
     },
     channels: async (p, args) => {
-      return Channel.find({}).populate('users').populate('messages');
+      return Channel.find({})
+        .populate('users')
+        .populate({
+          path: 'messages',
+          populate: {
+            path: 'sender'
+          }
+        });
     },
     messages: async (p, args) => {
-      return Message.find({});
+      return Message.find({}).populate('sender');
     },
     deleteChannels: async (p, args) => {
       return Channel.deleteMany({});
@@ -46,9 +52,7 @@ const resolvers = {
       const updatePromises = users.map((u) =>
         User.findOneAndUpdate(
           { _id: u._id },
-          {
-            $push: { channelModel: channelData }
-          },
+          { $push: { channelModel: channelData } },
           { new: true }
         )
       );
