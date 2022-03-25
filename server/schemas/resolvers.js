@@ -43,7 +43,23 @@ const resolvers = {
               return new AuthenticationError("Invalid Credentials")
             }
             //JWT stuff goes here
-            return user;
+            return User.findOne({email:user.email}).populate({
+                
+                path:"channelModel",
+                populate:{
+                    path: "messages",
+                    populate:{
+                        path:"sender"
+                    }
+                }
+            })
+            // .populate({
+                
+            //     path:"messages",
+            //     populate:{
+            //         path: "sender"
+            //     }
+            // })
           },
           createChannel: async(parent,{users})=>{
               const channelData =  await Channel.create({users:users})

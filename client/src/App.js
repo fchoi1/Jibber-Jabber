@@ -1,12 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import {
-  ApolloProvider,
-  ApolloClient,
-  InMemoryCache,
-  createHttpLink
-} from '@apollo/client';
+import {ApolloProvider,ApolloClient,InMemoryCache,createHttpLink} from '@apollo/client';
 
 // for auth to create middleware
 import { setContext } from '@apollo/client/link/context';
@@ -15,13 +10,14 @@ import { setContext } from '@apollo/client/link/context';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-
+import Main from "./components/Homepage/Main"
 // CSS
 import './App.css';
 
 // Apollo client stuff
 const httpLink = createHttpLink({ uri: '/graphql' });
 // dont need to use first argument of setContext (request)
+
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('id_token');
   return {
@@ -48,6 +44,8 @@ function App() {
               <Route exact path="/" element={<Home />} />
               {/* <Route exact path="/saved" component={SavedBooks} />
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} /> */}
+
+              <Route exact path="/main" element={<Main />} />
             </Routes>
           </div>
           <Footer />
