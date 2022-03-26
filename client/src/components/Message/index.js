@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment';
 
 const Message = (props) => {
   // extract variables from props object
@@ -8,7 +9,7 @@ const Message = (props) => {
     <>
       <h1>{username}</h1>
       <p>{textContent}</p>
-      <p>{timeStamp}</p>
+      <Moment fromNow> {timeStamp}</Moment>
     </>
   );
 };

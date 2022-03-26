@@ -12,7 +12,8 @@ const Channel = (props) => {
       }
     ],
     messages: [
-      { username: 'test1', textContent: 'Test message', timeStamp: Date.now() }
+      { username: 'test1', textContent: 'Test message', timeStamp: Date.now() },
+      { username: 'test2', textContent: 'Test message2', timeStamp: Date.now() }
     ]
   };
   const { channelName, messages, users } = channel;
