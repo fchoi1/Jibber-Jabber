@@ -18,6 +18,7 @@ import Home from './pages/Home';
 
 // CSS
 import './App.css';
+import Channel from './pages/Channel';
 
 // Apollo client stuff
 const httpLink = createHttpLink({ uri: '/graphql' });
@@ -46,6 +47,8 @@ function App() {
             <Header />
             <Routes>
               <Route exact path="/" element={<Home />} />
+              <Route exact path="/channel" element={<Channel />} />
+
               {/* <Route exact path="/saved" component={SavedBooks} />
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} /> */}
             </Routes>
