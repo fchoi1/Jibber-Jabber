@@ -83,4 +83,9 @@ text-align: center;
   font-size: 1.2rem;
 }
 
+.err{
+  color:yellow;
+  margin:0 1rem;
+}
+
 /* SIGN UP AND LOGIN PAGE END */

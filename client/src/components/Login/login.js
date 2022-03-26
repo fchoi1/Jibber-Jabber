@@ -3,17 +3,39 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
 
+import {validateEmail} from '../../utils/helpers'
+
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
+  const {email, password} = formState;
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Updates based on form input changes.
   const handleFormChange = (event) => {
     const { name, value } = event.target;
 
-    setFormState({
-      ...formState,
-      [name]: value
-    });
+    if(name === 'email'){
+      const isValid = validateEmail(value);
+      if(!isValid){
+        setErrorMessage("Your email is invalid!")
+      } else{
+        setErrorMessage("")
+      }
+    } else {
+      if(!value.length){
+        setErrorMessage(`${name} is required!`)
+      } else{
+        setErrorMessage("")
+      }
+    }
+
+    if(!errorMessage){
+      setFormState({
+        ...formState,
+        [name]: value
+      });
+    }
+  
   };
 
   // Submit form
@@ -42,31 +64,33 @@ const Login = (props) => {
     <div className="form-wrapper">
       <h2 className="signup-text">Login</h2>
       <form onSubmit={submitForm} className="signup-form">
-        <div className="signup-form-div">
-          <label htmlFor="username">Username</label>
+      <div className="signup-form-div">
+          <label htmlFor="email">Email</label>
           <input
-            // {/* Client username input register */}
-            className="form-input"
-            name="username"
-            type="username"
-            id="username"
-            value={formState.username}
-            onChange={handleFormChange}
-          />
+          name="email"
+          type="email"
+          id="email"
+          defaultValue={email}
+          onChange={handleFormChange}
+        />
         </div>
 
         <div className="signup-form-div">
           <label htmlFor="password">Password</label>
           <input
-            // {/* Client password input register */}
-            className="form-input"
             name="password"
             type="password"
             id="password"
-            value={formState.password}
+            defaultValue={password}
             onChange={handleFormChange}
           />
         </div>
+
+        {errorMessage && (
+          <div>
+            <p className="err">{errorMessage}</p>
+          </div>
+        )}
 
         {/* Button! */}
         <div className="btn-link-div">

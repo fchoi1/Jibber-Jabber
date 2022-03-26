@@ -1,6 +1,8 @@
 // Imports
 import React, { useState } from 'react';
 
+import {validateEmail} from '../../utils/helpers'
+
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../../utils/mutations';
 
@@ -11,16 +13,36 @@ const Signup = () => {
     email: '',
     password: ''
   });
+
+  const {username, email, password} = formState;
   const [addUser, { error }] = useMutation(ADD_USER);
 
+  const [errorMessage, setErrorMessage] = useState("")
+
   // update state based on form input changes
-  const handleChange = (event) => {
+  function handleChange(event) {
+
     const { name, value } = event.target;
 
-    setFormState({
-      ...formState,
-      [name]: value
-    });
+    if(name === 'email'){
+      const isValid = validateEmail(value);
+      if(!isValid){
+        setErrorMessage("Your email is invalid!")
+      }else {
+        setErrorMessage("");
+      }
+    } else {
+      if (!value.length) {
+        setErrorMessage(`${name} is required.`);
+      } else {
+        setErrorMessage("");
+      }
+    }
+    if (!errorMessage) {
+      setFormState({ ...formState, [name]: value });
+    }
+
+   
   };
 
   // submit form (notice the async!)
@@ -52,7 +74,7 @@ const Signup = () => {
           name="username"
           type="username"
           id="username"
-          value={formState.username}
+          defaultValue={username}
           onChange={handleChange}
         />
         </div>
@@ -61,11 +83,11 @@ const Signup = () => {
           <label htmlFor="email">Email</label>
           <input
           // {/* Client email input register */}
-          className="form-input"
+          
           name="email"
           type="email"
           id="email"
-          value={formState.email}
+          defaultValue={email}
           onChange={handleChange}
         />
         </div>
@@ -78,10 +100,16 @@ const Signup = () => {
           name="password"
           type="password"
           id="password"
-          value={formState.password}
+          defaultValue={password}
           onChange={handleChange}
         />
         </div>
+
+        {errorMessage && (
+          <div>
+            <p className="err">{errorMessage}</p>
+          </div>
+        )}
 
         {/* Button! */}
         <div className="btn-link-div">
