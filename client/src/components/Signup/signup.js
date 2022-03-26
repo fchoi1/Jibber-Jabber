@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../../utils/mutations'
+import { ADD_USER } from '../../utils/mutations';
 
 // Main logic function
 const Signup = () => {
@@ -41,52 +41,60 @@ const Signup = () => {
 
   // Returns this layout based on user/client request
   return (
-    <main>
-      <div>
-        <div className="card">
-          <h4 className="card-header">Sign Up</h4>
-          <div className="card-body">
-            <form onSubmit={formSubmit}>
-              <input
-                // {/* Client username input register */}
-                className="form-input"
-                placeholder="Your username"
-                name="username"
-                type="username"
-                id="username"
-                value={formState.username}
-                onChange={handleChange}
-              />
-              <input
-                // {/* Client email input register */}
-                className="form-input"
-                placeholder="Your email"
-                name="email"
-                type="email"
-                id="email"
-                value={formState.email}
-                onChange={handleChange}
-              />
-              <input
-                // {/* Client password input register */}
-                className="form-input"
-                placeholder="******"
-                name="password"
-                type="password"
-                id="password"
-                value={formState.password}
-                onChange={handleChange}
-              />
-              {/* Button! */}
-              <button className="btn" type="submit">
-                Submit
-              </button>
-            </form>
-            {error && <div>Sign up failed</div>}
-          </div>
+    <div className="form-wrapper">
+      <h2 className="signup-text">Sign Up</h2>
+      <form onSubmit={formSubmit} className="signup-form">
+        <div className="signup-form-div">
+          <label htmlFor="username">Username</label>
+          <input
+          // {/* Client username input register */}
+          className="form-input"
+          name="username"
+          type="username"
+          id="username"
+          value={formState.username}
+          onChange={handleChange}
+        />
         </div>
-      </div>
-    </main>
+    
+        <div className="signup-form-div">
+          <label htmlFor="email">Email</label>
+          <input
+          // {/* Client email input register */}
+          className="form-input"
+          name="email"
+          type="email"
+          id="email"
+          value={formState.email}
+          onChange={handleChange}
+        />
+        </div>
+
+        <div className="signup-form-div">
+          <label htmlFor="password">Password</label>
+          <input
+          // {/* Client password input register */}
+          className="form-input"
+          name="password"
+          type="password"
+          id="password"
+          value={formState.password}
+          onChange={handleChange}
+        />
+        </div>
+
+        {/* Button! */}
+        <div className="btn-link-div">
+        <button className="signup-form-btn" type="submit">
+          Sign Up
+        </button>
+        <a className="login-link" href="/login">Login instead!</a>
+        </div>
+       
+      </form>
+      {error && <div>Sign up failed</div>}
+    
+    </div>
   );
 };
 

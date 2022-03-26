@@ -35,48 +35,51 @@ const Login = (props) => {
       email: '',
       password: ''
     });
-
-   
   };
 
-   // Returns this layout on user/client request
+  // Returns this layout on user/client request
   return (
-    <main>
-      <div>
-        <div className="card">
-          <h4 className="card-header">Login</h4>
-          <div className="card-body"></div>
-          {/* Login form   */}
-          <form onSubmit={submitForm}>
-            {/* Client email input render */}
-            <input
-              className="form-input"
-              placeholder="Enter email"
-              name="email"
-              type="email"
-              id="email"
-              value={formState.email}
-              onChange={handleFormChange}
-            />
-            {/* Client password input render*/}
-            <input
-              className="form-input"
-              placeholder="******"
-              name="password"
-              type="password"
-              id="password"
-              value={formState.password}
-              onChange={handleFormChange}
-            />
-            {/* A button to submit, because who doesnt love buttons.*/}
-            <button className="btn" type="submit">
-              Submit
-            </button>
-          </form>
-          {/* {error && <div>Login failed</div>} */}
+    <div className="form-wrapper">
+      <h2 className="signup-text">Login</h2>
+      <form onSubmit={submitForm} className="signup-form">
+        <div className="signup-form-div">
+          <label htmlFor="username">Username</label>
+          <input
+            // {/* Client username input register */}
+            className="form-input"
+            name="username"
+            type="username"
+            id="username"
+            value={formState.username}
+            onChange={handleFormChange}
+          />
         </div>
-      </div>
-    </main>
+
+        <div className="signup-form-div">
+          <label htmlFor="password">Password</label>
+          <input
+            // {/* Client password input register */}
+            className="form-input"
+            name="password"
+            type="password"
+            id="password"
+            value={formState.password}
+            onChange={handleFormChange}
+          />
+        </div>
+
+        {/* Button! */}
+        <div className="btn-link-div">
+          <button className="signup-form-btn" type="submit">
+            Login
+          </button>
+          <a className="login-link" href="/signup">
+            Sign up instead!
+          </a>
+        </div>
+      </form>
+      {/* {error && <div>Sign up failed</div>} */}
+    </div>
   );
 };
 

@@ -2,6 +2,10 @@
   --footer-height: 2.5rem;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 #page-container {
   position: relative;
   min-height: 100vh;
@@ -11,9 +15,3 @@
   padding-bottom: var(--footer-height); /* Footer height */
 }
 
-#footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: var(--footer-height); /* Footer height */
-}

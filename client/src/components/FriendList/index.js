@@ -6,12 +6,12 @@ import FriendListItem from '../FriendListItem';
 const FriendList = () => {
   return (
     <Box>
-      <h1>Friend lists</h1>
+      <h2 style={{ paddingLeft: '16px' }}>Friend lists</h2>
       <List alignitems="flex-start">
         <FriendListItem name="Remy Sharp" isOnline={false} />
-        <Divider/>
+        <Divider />
         <FriendListItem name="Bob Dillion" isOnline={true} />
-        <Divider/>
+        <Divider />
         <FriendListItem name="Richard Smith" isOnline={false} />
         <Divider />
       </List>

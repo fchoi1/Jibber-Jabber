@@ -1,12 +1,16 @@
-import React from 'react';
-import './footer.css';
+import React from "react";
+import { SocialIcon } from 'react-social-icons';
+function DisplayFooter(){
+    return (
+        <div className=" bg-dark text-center d-flex footer justify-content-center" style={{"margin-top":"auto"}}>
+            dsdsd
+            <div className="m-2"><SocialIcon url="https://twitter.com/karansodhi"/></div>
+            <div className="m-2"><SocialIcon url="https://facebook.com/karan.sodhi" /></div>
+            <div className="m-2"><SocialIcon url="https://google.com/karan.sodhi" /></div>
+            <div className="m-2"><SocialIcon url="https://github.com/jaketrent" /></div>
+            
+        </div>
+    )
+}
 
-const Footer = () => {
-  return (
-    <footer id="footer">
-      <h2 className="footer-title">Footer</h2>
-    </footer>
-  );
-};
-
-export default Footer;
+export default DisplayFooter
