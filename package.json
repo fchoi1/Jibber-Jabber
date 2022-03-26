@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "googlebooks-app",
   "version": "1.0.0",
   "description": "",
@@ -15,10 +14,5 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^5.1.0"
-=======
-  "dependencies": {
-    "moment": "^2.29.1",
-    "react-moment": "^1.1.1"
->>>>>>> personal-chat
   }
 }
