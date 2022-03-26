@@ -5,9 +5,25 @@ const db = require('./config/connection');
 const { typeDefs, resolvers } = require('./schemas');
 const { ApolloServer } = require('apollo-server-express');
 const { authMiddleware } = require('./utils/auth');
+
 const app = express();
+
+// Socket Server
+const httpServer = require('http').createServer(app);
+const socketio = require('socket.io');
+
+// Attach socket.io to the server instance
+const io = socketio(httpServer);
+
+io.on('connection', (socket) => {
+  console.log('A client connected', socket.id);
+});
+
+io.listen(httpServer);
+
 const PORT = process.env.PORT || 3001;
 
+// GraphQL server
 const startServer = async () => {
   const server = new ApolloServer({
     typeDefs,
@@ -33,10 +49,18 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+app.get('/', (req, res) => {
+  console.log(__dirname + '\\socket-test.html');
+  res.sendFile(__dirname + '\\socket-test.html');
+});
+
 // app.get("*", (req, res) => {
 //     res.sendFile(path.join(__dirname, "../client/build/index.html"));
 // });
 
 db.once('open', () => {
-  app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));
+  // app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));
+  httpServer.listen({ port: process.env.PORT || 3001 }, () =>
+    console.log(`Socket Server is running on ${PORT}`)
+  );
 });
