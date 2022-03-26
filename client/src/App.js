@@ -42,7 +42,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div id="page-container" className='container mainSection' >
+        <div id="page-container" className='mainSection' >
           <div id="content-wrap" >
             <Header />
             <Routes>

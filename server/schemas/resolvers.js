@@ -10,12 +10,7 @@ const resolvers = {
     channels: async (p, args) => {
       return Channel.find({})
         .populate('users')
-        .populate({
-          path: 'messages',
-          populate: {
-            path: 'sender'
-          }
-        });
+        .populate({ path: 'messages', populate: { path: 'sender' } });
     },
     messages: async (p, args) => {
       return Message.find({}).populate('sender');
@@ -45,8 +40,8 @@ const resolvers = {
       //JWT stuff goes here
       return user;
     },
-    createChannel: async (parent, { users }) => {
-      const channelData = await Channel.create({ users: users });
+    createChannel: async (parent, { users, channelName }) => {
+      const channelData = await Channel.create({ users: users, channelName });
       console.log(channelData);
 
       const updatePromises = users.map((u) =>
@@ -57,8 +52,9 @@ const resolvers = {
         )
       );
       Promise.all(updatePromises).then(console.log).catch(console.error);
+      return channelData;
     },
-    sendMessage: async (parent, { _id, textValue, senderId }) => {
+    sendMessage: async (parent, { channelId, textValue, senderId }) => {
       //we will first create a message get id and then grab the value from the message table
       const msgId = await Message.create({
         textValue: textValue,
@@ -66,7 +62,12 @@ const resolvers = {
       });
       console.log(msgId);
       //we can use the textvalue to update the channel
-      return Channel.findOneAndUpdate({ _id }, { $push: { messages: msgId } });
+      return Channel.findOneAndUpdate(
+        { channelId },
+        { $push: { messages: msgId } }
+      )
+        .populate('messages')
+        .populate('users');
 
       //return Channel.updateOne({_id},{$push:{messages:{}}})
     },
