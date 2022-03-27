@@ -7,8 +7,13 @@ const resolvers = {
       const params = username ? { username } : {};
       return await User.find(params).populate('channelModel');
     },
+    singleChannel: async (p, { channelId }) => {
+      return await Channel.findById({ _id: channelId })
+        .populate('users')
+        .populate({ path: 'messages', populate: { path: 'sender' } });
+    },
     channels: async (p, args) => {
-      return Channel.find({})
+      return await Channel.find({})
         .populate('users')
         .populate({ path: 'messages', populate: { path: 'sender' } });
     },
@@ -56,19 +61,19 @@ const resolvers = {
     },
     sendMessage: async (parent, { channelId, textValue, senderId }) => {
       //we will first create a message get id and then grab the value from the message table
+      // senderId will be replaced with current logined
       const msgId = await Message.create({
         textValue: textValue,
         sender: senderId
       });
-      console.log(msgId);
       //we can use the textvalue to update the channel
       return Channel.findOneAndUpdate(
         { channelId },
-        { $push: { messages: msgId } }
+        { $push: { messages: msgId } },
+        { new: true }
       )
-        .populate('messages')
+        .populate({ path: 'messages', populate: { path: 'sender' } })
         .populate('users');
-
       //return Channel.updateOne({_id},{$push:{messages:{}}})
     },
     createMessage: async (p, args) => {

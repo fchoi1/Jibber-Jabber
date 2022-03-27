@@ -30,7 +30,7 @@ const typeDefs = gql`
     channelModel: [Channel]
     friends: [User]
   }
-  
+
   input Userss {
     _id: ID
   }
@@ -41,6 +41,7 @@ const typeDefs = gql`
 
   type Query {
     users(username: String): [User]
+    singleChannel(channelId: ID!): Channel
     channels: [Channel]
     messages: [Message]
     deleteChannels: Channel

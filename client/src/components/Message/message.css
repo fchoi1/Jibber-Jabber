@@ -1,0 +1,13 @@
+.messageTimestamp {
+}
+
+.messageBody {
+}
+
+.messageSender {
+}
+
+.messageRow {
+  display: 'flex';
+  justify-content: 'flex-end';
+}

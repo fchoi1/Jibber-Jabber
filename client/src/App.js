@@ -20,6 +20,9 @@ import Home from './pages/Home';
 import './App.css';
 import Channel from './pages/Channel';
 
+// Socket IO
+import { SocketContext, socket } from './context/socket';
+
 // Apollo client stuff
 const httpLink = createHttpLink({ uri: '/graphql' });
 // dont need to use first argument of setContext (request)
@@ -42,16 +45,19 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div id="page-container" className='mainSection' >
-          <div id="content-wrap" >
+        <div id="page-container" className="mainSection">
+          <div id="content-wrap">
             <Header />
-            <Routes>
-              <Route exact path="/" element={<Home />} />
-              <Route exact path="/channel" element={<Channel />} />
+            <SocketContext.Provider value={socket}>
+              <Routes>
+                <Route exact path="/" element={<Home />} />
+                <Route exact path="/channel" element={<Channel />} />
+                <Route path="*" element={<div>Page not Found</div>} />
 
-              {/* <Route exact path="/saved" component={SavedBooks} />
+                {/* <Route exact path="/saved" component={SavedBooks} />
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} /> */}
-            </Routes>
+              </Routes>
+            </SocketContext.Provider>
           </div>
           <Footer />
         </div>

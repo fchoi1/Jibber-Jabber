@@ -11,12 +11,22 @@ const app = express();
 // Socket Server
 const httpServer = require('http').createServer(app);
 const socketio = require('socket.io');
+const { newChat } = require('./socketFunctions');
 
 // Attach socket.io to the server instance
-const io = socketio(httpServer);
+const io = socketio(httpServer, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST']
+  }
+});
 
 io.on('connection', (socket) => {
-  console.log('A client connected', socket.id);
+  /* socket object may be used to send specific messages to the new connected client */
+  console.log('new client connected', socket.id);
+  socket.emit('connection', null);
+
+  newChat(io, socket);
 });
 
 io.listen(httpServer);
@@ -51,6 +61,10 @@ if (process.env.NODE_ENV === 'production') {
 
 // app.get("*", (req, res) => {
 //     res.sendFile(path.join(__dirname, "../client/build/index.html"));
+// });
+
+// app.get("/", (req, res) => {
+//     res.sendFile(path.join(__dirname, "./socket-test.html"));
 // });
 
 db.once('open', () => {

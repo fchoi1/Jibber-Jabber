@@ -1,5 +1,7 @@
 import React from 'react';
+
 import {
+  Link,
   ListItem,
   AvatarGroup,
   Avatar,
@@ -44,31 +46,32 @@ const ChatListItem = (props) => {
   console.log(usersList);
 
   return (
-    <ListItem alignItems="flex-start">
-      <AvatarGroup max={4} sx={{pr: 1}}>
-        {usersList.map((user) => (
-          <StyledBadge
-            key={user.name}
-            overlap="circular"
-            color={user.isOnline ? 'primary' : 'secondary'}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            variant="dot"
-          >
-            <Avatar alt={user.name} src="/static/images/avatar/1.jpg" />
-          </StyledBadge>
-        ))}
-      </AvatarGroup>
-
-      <ListItemText
-        primary={channel.channelName}
-        secondary={
-          <>
-            <strong>{channel.messages.sender}</strong> -{' '}
-            {channel.messages.textValue}
-          </>
-        }
-      />
-    </ListItem>
+    <Link href={`/channel`} style={{ textDecoration: 'none' }}>
+      <ListItem alignItems="flex-start">
+        <AvatarGroup max={4} sx={{ pr: 1 }}>
+          {usersList.map((user) => (
+            <StyledBadge
+              key={user.name}
+              overlap="circular"
+              color={user.isOnline ? 'primary' : 'secondary'}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              variant="dot"
+            >
+              <Avatar alt={user.name} src="/static/images/avatar/1.jpg" />
+            </StyledBadge>
+          ))}
+        </AvatarGroup>
+        <ListItemText
+          primary={channel.channelName}
+          secondary={
+            <>
+              <strong>{channel.messages.sender}</strong> -{' '}
+              {channel.messages.textValue}
+            </>
+          }
+        />
+      </ListItem>
+    </Link>
   );
 };
 export default ChatListItem;
