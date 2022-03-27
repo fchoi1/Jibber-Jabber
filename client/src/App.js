@@ -20,6 +20,10 @@ import Home from './pages/Home';
 import './App.css';
 import Channel from './pages/Channel';
 
+// Sign up and Login
+import Signup from './components/Signup/signup'
+import Login from './components/Login/login'
+
 // Apollo client stuff
 const httpLink = createHttpLink({ uri: '/graphql' });
 // dont need to use first argument of setContext (request)
@@ -51,8 +55,10 @@ function App() {
 
               {/* <Route exact path="/saved" component={SavedBooks} />
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} /> */}
+             <Route exact path="/signup" element={<Signup/>}/>
+              <Route exact path='/login' element ={ <Login/>}/>
             </Routes>
-          </div>
+          </div>        
           <Footer />
         </div>
       </Router>
