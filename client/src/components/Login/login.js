@@ -71,7 +71,7 @@ const Login = (props) => {
           type="email"
           id="email"
           defaultValue={email}
-          onChange={handleFormChange}
+          onBlur={handleFormChange}
         />
         </div>
 
@@ -82,7 +82,7 @@ const Login = (props) => {
             type="password"
             id="password"
             defaultValue={password}
-            onChange={handleFormChange}
+            onBlur={handleFormChange}
           />
         </div>
 
