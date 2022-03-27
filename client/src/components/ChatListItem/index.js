@@ -45,7 +45,7 @@ const ChatListItem = (props) => {
 
   return (
     <ListItem alignItems="flex-start">
-      <AvatarGroup max={4} sx={{pr: 1}}>
+      <AvatarGroup max={4} sx={{ pr: 1 }}>
         {usersList.map((user) => (
           <StyledBadge
             key={user.name}
@@ -59,15 +59,15 @@ const ChatListItem = (props) => {
         ))}
       </AvatarGroup>
 
-      <ListItemText
-        primary={channel.channelName}
-        secondary={
-          <>
-            <strong>{channel.messages.sender}</strong> -{' '}
-            {channel.messages.textValue}
-          </>
-        }
-      />
+      <div>
+        <span className={'h-text'}>
+          <strong>{channel.channelName}</strong>
+        </span>
+        <p>
+          <strong>{channel.messages.sender}</strong> -{' '}
+          {channel.messages.textValue}
+        </p>
+      </div>
     </ListItem>
   );
 };

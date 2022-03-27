@@ -6,7 +6,7 @@ import FriendListItem from '../FriendListItem';
 const FriendList = () => {
   return (
     <Box>
-      <h2 style={{ paddingLeft: '16px' }}>Friend lists</h2>
+      <h2>Friend lists</h2>
       <List alignitems="flex-start">
         <FriendListItem name="Remy Sharp" isOnline={false} />
         <Divider />

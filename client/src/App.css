@@ -1,9 +1,31 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
 :root {
   --footer-height: 70px;
+  --color-theme: #f53b57;
+  --color-accent: #0fbcf9;
+  --color-light: #d2dae2;
+  --color-mid: #485460;
+  --color-dark: #1e272e;
 }
 
 body {
   overflow-x: hidden;
+  color: white;
+  background-color: var(--color-dark);
+  display: flex;
+  flex-direction: column;
+}
+
+.h-text {
+  color: var(--color-accent);
+}
+
+.p-text {
+  color: var(--color-light);
 }
 
 #page-container {
@@ -12,6 +34,18 @@ body {
 }
 
 #content-wrap {
-  padding-bottom: var(--footer-height); /* Footer height */
+  padding-bottom: var(--footer-height);
 }
 
+.mainSection {
+  color: var(--color-theme);
+  padding: 1%;
+  overflow-x: hidden;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: var(--footer-height);
+}
