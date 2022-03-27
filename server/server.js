@@ -27,8 +27,8 @@ const PORT = process.env.PORT || 3001;
 const startServer = async () => {
   const server = new ApolloServer({
     typeDefs,
-    resolvers
-    //context:authMiddleware
+    resolvers,
+    context:authMiddleware
   });
 
   await server.start();
@@ -49,14 +49,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.get('/', (req, res) => {
-  console.log(__dirname + '\\socket-test.html');
-  res.sendFile(__dirname + '\\socket-test.html');
-});
-
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../client/build/index.html"));
-// });
 
 db.once('open', () => {
   // app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));

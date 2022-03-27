@@ -28,6 +28,12 @@ const typeDefs = gql`
     input Messagess{
         _id:ID
     }
+
+    type Auth{
+        token: ID!
+        user: User
+    }
+
     type Query {
         users(username:String): [User]
         channels:[Channel]
@@ -37,8 +43,8 @@ const typeDefs = gql`
     } 
 
     type Mutation{
-        addUser(username:String!, email:String!, password:String!): User
-        login(email:String!,password:String!):User
+        addUser(username:String!, email:String!, password:String!): Auth
+        login(email:String!,password:String!):Auth
         createChannel(users:[Userss]!): Channel
         sendMessage(_id:ID,textValue:String!,senderId:Userss!):Channel
         createMessage(textValue:String!): Message

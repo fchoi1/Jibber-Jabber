@@ -1,5 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Message, Channel } = require('../models');
+//import signToken function
+const {signToken} = require('../utils/auth')
 
 const resolvers = {
   Query: {
@@ -31,8 +33,11 @@ const resolvers = {
     addUser: async (parent, args) => {
       const user = await User.create(args);
       //jwt token stuff goes here
-      return user;
+      const token = signToken(user);
+
+      return {token,user};
     },
+
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user) {
@@ -43,8 +48,10 @@ const resolvers = {
         return new AuthenticationError('Invalid Credentials');
       }
       //JWT stuff goes here
-      return user;
+      const token = signToken(user)
+      return {token, user};
     },
+
     createChannel: async (parent, { users }) => {
       const channelData = await Channel.create({ users: users });
       console.log(channelData);
