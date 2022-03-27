@@ -46,7 +46,6 @@ const Signup = () => {
   const formSubmit = async (event) => {
     event.preventDefault();
 
-
     // make sure the form inputs are valid before adding user
     if (!errorMessage) {
       // use try/catch instead of promises to handle errors

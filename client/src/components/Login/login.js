@@ -3,39 +3,41 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
 
-import {validateEmail} from '../../utils/helpers'
+import { validateEmail } from '../../utils/helpers';
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
-  const {email, password} = formState;
+  const { email, password } = formState;
   const [errorMessage, setErrorMessage] = useState('');
+
+  const [login, { error }] = useMutation(LOGIN_USER);
+
 
   // Updates based on form input changes.
   const handleFormChange = (event) => {
     const { name, value } = event.target;
 
-    if(name === 'email'){
+    if (name === 'email') {
       const isValid = validateEmail(value);
-      if(!isValid){
-        setErrorMessage("Your email is invalid!")
-      } else{
-        setErrorMessage("")
+      if (!isValid) {
+        setErrorMessage('Your email is invalid!');
+      } else {
+        setErrorMessage('');
       }
     } else {
-      if(!value.length){
-        setErrorMessage(`${name} is required!`)
-      } else{
-        setErrorMessage("")
+      if (!value.length) {
+        setErrorMessage(`${name} is required!`);
+      } else {
+        setErrorMessage('');
       }
     }
 
-    if(!errorMessage){
+    if (!errorMessage) {
       setFormState({
         ...formState,
         [name]: value
       });
     }
-  
   };
 
   // Submit form
@@ -43,7 +45,7 @@ const Login = (props) => {
     event.preventDefault();
 
     try {
-      const { data } = await Login({
+      const { data } = await login({
         variables: { ...formState }
       });
 
@@ -64,15 +66,15 @@ const Login = (props) => {
     <div className="form-wrapper">
       <h2 className="signup-text">Login</h2>
       <form onSubmit={submitForm} className="signup-form">
-      <div className="signup-form-div">
+        <div className="signup-form-div">
           <label htmlFor="email">Email</label>
           <input
-          name="email"
-          type="email"
-          id="email"
-          defaultValue={email}
-          onBlur={handleFormChange}
-        />
+            name="email"
+            type="email"
+            id="email"
+            defaultValue={email}
+            onBlur={handleFormChange}
+          />
         </div>
 
         <div className="signup-form-div">
