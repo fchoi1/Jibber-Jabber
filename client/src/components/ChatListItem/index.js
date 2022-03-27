@@ -44,7 +44,7 @@ const ChatListItem = (props) => {
   console.log(usersList);
 
   return (
-    <ListItem alignItems="flex-start">
+    <ListItem className={'sub-section'} alignItems="flex-start">
       <AvatarGroup max={4} sx={{ pr: 1 }}>
         {usersList.map((user) => (
           <StyledBadge
@@ -63,7 +63,7 @@ const ChatListItem = (props) => {
         <span className={'h-text'}>
           <strong>{channel.channelName}</strong>
         </span>
-        <p>
+        <p className={'p-text'}>
           <strong>{channel.messages.sender}</strong> -{' '}
           {channel.messages.textValue}
         </p>

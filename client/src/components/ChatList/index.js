@@ -31,7 +31,7 @@ const ChatList = () => {
 
   return (
     <>
-      <h2>Your recent chats!</h2>
+      <h2 className="h-text">Your recent chats!</h2>
       <List dense={true}>
         <ChatListItem channel={channel1} />
         <Divider />

@@ -23,13 +23,14 @@ const Home = () => {
         >
           <FriendListMobile />
         </Grid>
-        <Grid item xs={8} sx={{ border: 'solid' }}>
+        <Grid item xs={8} className={'main-section'}>
           <ChatList />
         </Grid>
         <Grid
           item
           xs={4}
-          sx={{ display: { xs: 'none', sm: 'block' }, border: 'solid' }}
+          sx={{ display: { xs: 'none', sm: 'block' } }}
+          className={'main-section'}
         >
           <FriendList />
         </Grid>

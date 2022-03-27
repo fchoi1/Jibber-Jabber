@@ -39,7 +39,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 const FriendListItem = (props) => {
   const { name, isOnline } = props;
   return (
-    <ListItem>
+    <ListItem className={'sub-section'}>
       <ListItemAvatar>
         <StyledBadge
           color={isOnline ? 'primary' : 'secondary'}

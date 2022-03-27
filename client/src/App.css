@@ -5,7 +5,7 @@
 
 :root {
   --footer-height: 70px;
-  --color-theme: #f53b57;
+  --color-theme: #ff3f34;
   --color-accent: #0fbcf9;
   --color-light: #d2dae2;
   --color-mid: #485460;
@@ -20,16 +20,22 @@ body {
   flex-direction: column;
 }
 
+.theme-text {
+  color: var(--color-theme);
+}
+
 .h-text {
   color: var(--color-accent);
 }
 
 .p-text {
   color: var(--color-light);
+  margin: 0;
 }
 
 #page-container {
   position: relative;
+  padding: 20px 30px;
   min-height: 100vh;
 }
 
@@ -37,10 +43,21 @@ body {
   padding-bottom: var(--footer-height);
 }
 
-.mainSection {
-  color: var(--color-theme);
+/* shared styles for main and sub sections */
+.main-section,
+.sub-section {
+  border-radius: 10px;
+}
+
+.main-section {
+  color: var(--color-accent);
   padding: 1%;
   overflow-x: hidden;
+  background-color: var(--color-mid);
+}
+
+.sub-section {
+  background-color: var(--color-dark);
 }
 
 #footer {

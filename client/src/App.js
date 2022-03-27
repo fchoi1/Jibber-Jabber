@@ -42,8 +42,8 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div id="page-container" className='mainSection' >
-          <div id="content-wrap" >
+        <div id="page-container">
+          <div id="content-wrap">
             <Header />
             <Routes>
               <Route exact path="/" element={<Home />} />
