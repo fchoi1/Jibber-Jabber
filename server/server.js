@@ -13,7 +13,7 @@ const startServer = async () => {
     typeDefs,
     resolvers,
     context:authMiddleware
-  });//dfdfd
+  });//dfdfdc
 
   await server.start();
   server.applyMiddleware({ app });
