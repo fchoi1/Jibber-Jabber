@@ -43,6 +43,7 @@ const typeDefs = gql`
         deleteChannels: Channel
         deleteMessages: Message
         me: User 
+        channel(_id: ID!):Channel
     } 
 
     type Mutation{

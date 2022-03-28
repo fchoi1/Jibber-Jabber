@@ -61,6 +61,15 @@ const resolvers = {
         },
         deleteMessages:async(p,args)=>{
             return Message.deleteMany({})
+        },
+        channel:async(p,{_id})=>{
+            return Channel.findById({_id}).populate("users").populate({
+                
+                path:"messages",
+                populate:{
+                    path: "sender"
+                }
+            })
         }
     },
     Mutation:{
