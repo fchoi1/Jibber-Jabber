@@ -35,7 +35,6 @@ const typeDefs = gql`
         token: ID!
         user: User
     }
-
     type Query {
         users(username:String): [User]
         channels:[Channel]
@@ -44,6 +43,7 @@ const typeDefs = gql`
         deleteMessages: Message
         me: User 
         channel(_id: ID!):Channel
+        
     } 
 
     type Mutation{
@@ -52,6 +52,7 @@ const typeDefs = gql`
         createChannel(users:[Userss]!): Channel
         sendMessage(_id:ID,textValue:String!,senderId:Userss!):Channel
         createMessage(textValue:String!): Message
+        findUser(email:String!):User
     }
 `
 module.exports = typeDefs

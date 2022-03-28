@@ -70,7 +70,10 @@ const resolvers = {
                     path: "sender"
                 }
             })
-        }
+        },
+       
+        
+        
     },
     Mutation:{
         addUser: async(parent,args)=>{
@@ -115,7 +118,12 @@ const resolvers = {
           },
           createMessage: async(p,args)=>{
               return Message.create(args)
-          }
+          },
+          findUser: async(p,{email})=>{
+            //console.log(args.char)
+            //const pattern = `/^${username}/`
+            return User.findOne({email});
+        }
     }
 }
 module.exports = resolvers
