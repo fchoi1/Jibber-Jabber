@@ -101,6 +101,7 @@ body {
 }
 
 #footer {
-    margin-top:1rem;
+    border-radius:12px;
+    margin:1rem 0;
     height: var(--footer-height);
 }
