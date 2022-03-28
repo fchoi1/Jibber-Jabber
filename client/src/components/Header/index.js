@@ -1,9 +1,10 @@
 import React from 'react';
+import image from '../../assets/jj(header).png';
 
 const Header = () => {
   return (
-    <header className="">
-      <h1 className="theme-text">Header</h1>
+    <header className="header">
+      <img src={image} alt='headerimage' className='header-img'></img>
     </header>
   );
 };

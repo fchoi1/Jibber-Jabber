@@ -7,7 +7,6 @@ function DisplayFooter() {
       id="footer"
       className="bg-dark text-center d-flex footer justify-content-center"
     >
-      dsdsd
       <div className="m-2">
         <SocialIcon url="https://twitter.com/karansodhi" />
       </div>

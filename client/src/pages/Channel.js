@@ -20,12 +20,16 @@ const Channel = (props) => {
 
   return (
     <>
-      {/* name of channel */}
-      <h1>{channelName}</h1>
       {/* map through all users to display their names */}
-      <div>
+      <div className='channel-head' >
+      {/* name of channel */}
+      <h1 >{channelName}</h1>
         {users.map((user) => (
-          <div key={user._id}>{user.name}</div>
+          <div key={user._id} >
+           <h3>
+           {user.name}
+             </h3> 
+            </div>
         ))}
       </div>
       {/* map through all messages to show their content */}
