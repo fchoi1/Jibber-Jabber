@@ -51,11 +51,11 @@ function App() {
         <Header />
           <div id="content-wrap" >
             <Routes>
-              <Route exact path="/" component={WelcomePage}></Route>
-              <Route exact path="/dashboard" component={Home} />
-              <Route exact path="/channel" component={Channel} />
-              <Route exact path="/signup" component={Signup}/>
-              <Route exact path='/login' component ={ Login}/>
+              <Route exact path="/" element={<WelcomePage></WelcomePage>}></Route>
+              <Route exact path="/dashboard" element={<Home></Home>} />
+              <Route exact path="/channel" element={<Channel></Channel>} />
+              <Route exact path="/signup" element={<Signup></Signup>}/>
+              <Route exact path='/login' element={<Login></Login>}/>
             </Routes>
           </div>        
           <Footer />
