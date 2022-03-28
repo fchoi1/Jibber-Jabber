@@ -1,17 +1,106 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
 :root {
-  --footer-height: 70px;
+    --footer-height: 70px;
+    --color-theme: #ff3f34;
+    --color-accent: #0fbcf9;
+    --color-light: #d2dae2;
+    --color-mid: #485460;
+    --color-dark: #1e272e;
+    --color-white: #f3f5f7;
+    --color-back: #343a40;
 }
 
 body {
-  overflow-x: hidden;
+    overflow-x: hidden;
+    color: white;
+    background-color: var(--color-dark);
+    display: flex;
+    flex-direction: column;
+}
+
+
+.theme-text {
+    color: var(--color-theme);
+}
+
+.h-text {
+    color: var(--color-accent);
+}
+
+.p-text {
+    color: var(--color-light);
+    margin: 0;
 }
 
 #page-container {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   min-height: 100vh;
+  padding: 1rem;
+
 }
 
-#content-wrap {
-  padding-bottom: var(--footer-height); /* Footer height */
+#content-wrap{
+  
+   height: 70vh;
 }
 
+
+
+
+/* shared styles for main and sub sections */
+
+.main-section,
+.sub-section {
+    border-radius: 10px;
+}
+
+.main-section {
+    color: var(--color-accent);
+    padding: 1%;
+    overflow-x: hidden;
+}
+
+.main-left {
+    border: 2px solid var(--color-white);
+}
+
+.main-right {
+    border: 2px solid var(--color-mid);
+}
+
+.sub-section {
+    background-color: var(--color-mid);
+    /* background-color: var(--color-dark); */
+}
+
+
+/* Channel css */
+
+.channel-head {
+    background-color: var(--color-mid);
+    padding-left: 30px;
+    border-top-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.chat-box {
+    background-color: var(--color-light);
+    border-radius: 5px;
+    /* width: 50%; */
+    margin: 2px
+}
+
+.chat-message {
+    background-color: var(--color-mid);
+}
+
+#footer {
+    margin-top:1rem;
+    height: var(--footer-height);
+}

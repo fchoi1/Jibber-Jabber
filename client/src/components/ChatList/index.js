@@ -30,14 +30,15 @@ const ChatList = () => {
   };
 
   return (
-  <>
-    <h2 style={{paddingLeft: "16px"}}>Your recent chats!</h2>
-    <List dense={true}>
-      <ChatListItem channel={channel1} />
-      <Divider />
-      <ChatListItem channel={channel2} />
-      <Divider />
-    </List>
+    <>
+      <h2 className="h-text">Your recent chats!</h2>
+     
+      <List dense={true}>
+        <ChatListItem channel={channel1} />
+        <Divider />
+        <ChatListItem channel={channel2} />
+        <Divider />
+      </List>
     </>
   );
 };

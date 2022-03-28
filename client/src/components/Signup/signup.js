@@ -72,39 +72,37 @@ const Signup = () => {
       <h2 className="signup-text">Sign Up</h2>
       <form onSubmit={formSubmit} className="signup-form">
         <div className="signup-form-div">
-          <label htmlFor="username">Username</label>
           <input
             // {/* Client username input register */}
             className="form-input"
             name="username"
             type="username"
             id="username"
+            placeholder="Username"
             defaultValue={username}
             onBlur={handleChange}
           />
         </div>
 
         <div className="signup-form-div">
-          <label htmlFor="email">Email</label>
           <input
-            // {/* Client email input register */}
-
             name="email"
             type="email"
             id="email"
+            placeholder="Email"
             defaultValue={email}
             onBlur={handleChange}
           />
         </div>
 
         <div className="signup-form-div">
-          <label htmlFor="password">Password</label>
           <input
             // {/* Client password input register */}
             className="form-input"
             name="password"
             type="password"
             id="password"
+            placeholder="******"
             defaultValue={password}
             onBlur={handleChange}
             minLength="4"
@@ -117,12 +115,11 @@ const Signup = () => {
           </div>
         )}
 
-        {/* Button! */}
         <div className="btn-link-div">
           <button className="signup-form-btn" type="submit">
             Sign Up
           </button>
-          <Link className="login-link" to="/login">Already have an account? Login instead</Link>
+          <Link className="login-link" to="/login">Login instead</Link>
         </div>
       </form>
       {error && <div>Sign up failed</div>}

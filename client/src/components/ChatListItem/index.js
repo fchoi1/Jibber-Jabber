@@ -44,8 +44,8 @@ const ChatListItem = (props) => {
   console.log(usersList);
 
   return (
-    <ListItem alignItems="flex-start">
-      <AvatarGroup max={4} sx={{pr: 1}}>
+    <ListItem className={'sub-section'} alignItems="flex-start">
+      <AvatarGroup max={4} sx={{ pr: 1 }}>
         {usersList.map((user) => (
           <StyledBadge
             key={user.name}
@@ -59,15 +59,15 @@ const ChatListItem = (props) => {
         ))}
       </AvatarGroup>
 
-      <ListItemText
-        primary={channel.channelName}
-        secondary={
-          <>
-            <strong>{channel.messages.sender}</strong> -{' '}
-            {channel.messages.textValue}
-          </>
-        }
-      />
+      <div>
+        <span className={'h-text'}>
+          <strong>{channel.channelName}</strong>
+        </span>
+        <p className={'p-text'}>
+          <strong>{channel.messages.sender}</strong> -{' '}
+          {channel.messages.textValue}
+        </p>
+      </div>
     </ListItem>
   );
 };

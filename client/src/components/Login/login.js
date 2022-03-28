@@ -69,22 +69,25 @@ const Login = (props) => {
       <h2 className="signup-text">Login</h2>
       <form onSubmit={submitForm} className="signup-form">
         <div className="signup-form-div">
-          <label htmlFor="email">Email</label>
+          
           <input
             name="email"
             type="email"
             id="email"
+            placeholder="Email"
             defaultValue={email}
             onBlur={handleFormChange}
           />
         </div>
 
+        
+
         <div className="signup-form-div">
-          <label htmlFor="password">Password</label>
           <input
             name="password"
             type="password"
             id="password"
+            placeholder="******"
             defaultValue={password}
             onBlur={handleFormChange}
           />
