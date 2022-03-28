@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import {
   ApolloProvider,
@@ -15,6 +15,7 @@ import { setContext } from '@apollo/client/link/context';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import WelcomePage from './components/WelcomePage'
 
 // CSS
 import './App.css';
@@ -47,16 +48,14 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div id="page-container" className='mainSection' >
+        <Header />
           <div id="content-wrap" >
-            <Header />
             <Routes>
-              <Route exact path="/" element={<Home />} />
-              <Route exact path="/channel" element={<Channel />} />
-
-              {/* <Route exact path="/saved" component={SavedBooks} />
-            <Route render={() => <h1 className="display-2">Wrong page!</h1>} /> */}
-             <Route exact path="/signup" element={<Signup/>}/>
-              <Route exact path='/login' element ={ <Login/>}/>
+              <Route exact path="/" component={WelcomePage}></Route>
+              <Route exact path="/dashboard" component={Home} />
+              <Route exact path="/channel" component={Channel} />
+              <Route exact path="/signup" component={Signup}/>
+              <Route exact path='/login' component ={ Login}/>
             </Routes>
           </div>        
           <Footer />

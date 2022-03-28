@@ -1,10 +1,33 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import Auth from '../../utils/auth';
 
+import './header.css'
 
 const Header = () => {
-    return(<header className=''>
-        <h1>Header</h1>
-    </header>)
-}
+  const loggedIn = Auth.loggedIn();
 
-export default Header
+  const logout = event =>{
+      event.preventDefault();
+      Auth.logout();
+  }
+
+  return (
+    <header>
+      <Link to="/">
+        <h1>Jibber Jabber</h1>
+      </Link>
+
+      <nav>
+        {loggedIn && (
+            <>
+          <Link to="/dashboard">Dashboard</Link> 
+           <a href="/" onClick={logout}>Logout</a>
+          </>
+        ) }
+      </nav>
+    </header>
+  );
+};
+
+export default Header;

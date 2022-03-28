@@ -5,6 +5,8 @@ import { validateEmail } from '../../utils/helpers';
 
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../../utils/mutations';
+import Auth from "../../utils/auth"
+import {Link} from 'react-router-dom'
 
 // Main logic function
 const Signup = () => {
@@ -37,6 +39,7 @@ const Signup = () => {
         setErrorMessage('');
       }
     }
+    //if all input values are validated set formState
     if (!errorMessage) {
       setFormState({ ...formState, [name]: value });
     }
@@ -55,6 +58,7 @@ const Signup = () => {
         const { data } = await addUser({
           variables: { ...formState }
         });
+        Auth.login(data.addUser.token)
         console.log(data);
       } catch (e) {
         console.error(e);
@@ -118,9 +122,7 @@ const Signup = () => {
           <button className="signup-form-btn" type="submit">
             Sign Up
           </button>
-          <a className="login-link" href="/login">
-            Login instead!
-          </a>
+          <Link className="login-link" to="/login">Already have an account? Login instead</Link>
         </div>
       </form>
       {error && <div>Sign up failed</div>}

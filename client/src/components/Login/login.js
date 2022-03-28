@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
-
+import Auth from '../../utils/auth'
 import { validateEmail } from '../../utils/helpers';
+import {Link} from 'react-router-dom'
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
@@ -48,7 +49,8 @@ const Login = (props) => {
       const { data } = await login({
         variables: { ...formState }
       });
-
+      //add token to localstorage
+      Auth.login(data.login.token)
       console.log(data);
     } catch (e) {
       console.error(e);
@@ -99,12 +101,11 @@ const Login = (props) => {
           <button className="signup-form-btn" type="submit">
             Login
           </button>
-          <a className="login-link" href="/signup">
-            Sign up instead!
-          </a>
+          <Link className="login-link" to="/signup">Sign up instead</Link>
+    
         </div>
       </form>
-      {/* {error && <div>Sign up failed</div>} */}
+      {error && <div>Login failed</div>}
     </div>
   );
 };

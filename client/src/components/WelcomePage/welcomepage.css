@@ -1,0 +1,13 @@
+.welcome-div{
+   
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0 1rem;
+}
+
+.welcome-div button{
+    padding: 1rem;
+}

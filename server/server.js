@@ -1,11 +1,20 @@
+// import express server
 const express = require('express');
-const path = require('path');
+
+// import database connection
 const db = require('./config/connection');
-//const routes = require('./routes');
+
+// import typeDefs and resolvers
 const { typeDefs, resolvers } = require('./schemas');
+
+// import ApolloServer
 const { ApolloServer } = require('apollo-server-express');
+
+// import authentication middleware
 const { authMiddleware } = require('./utils/auth');
 
+const path = require('path');
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 // Socket Server
@@ -21,40 +30,39 @@ io.on('connection', (socket) => {
 
 io.listen(httpServer);
 
-const PORT = process.env.PORT || 3001;
-
 // GraphQL server
 const startServer = async () => {
+  // create a new Apollo server and pass in our schema data
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context:authMiddleware
+    context: authMiddleware
   });
 
+  // start the apollo sever
   await server.start();
+
+  // integrate our Apollo server with the Express application as middleware
   server.applyMiddleware({ app });
+
+  // log where we can go to test our GQL API
   console.log(`Use GraphQ at http://localhost:${PORT}${server.graphqlPath}`);
 };
 
+// initialize the apollo server
 startServer();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(path.join(__dirname, '../client/build')));
-  });
 }
 
-<<<<<<< HEAD
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../client/build/index.html"));
-// });
-=======
->>>>>>> feature/jwt
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 db.once('open', () => {
   // app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));

@@ -46,19 +46,26 @@ const resolvers = {
       const token = signToken(user)
       return {token, user};
     },
-    createChannel: async (parent, { users, channelName }) => {
-      const channelData = await Channel.create({ users: users, channelName });
-      console.log(channelData);
-
-      const updatePromises = users.map((u) =>
-        User.findOneAndUpdate(
-          { _id: u._id },
-          { $push: { channelModel: channelData } },
-          { new: true }
-        )
-      );
-      Promise.all(updatePromises).then(console.log).catch(console.error);
-      return channelData;
+    createChannel: async (parent, { users, channelName },context) => {
+      // verify user with token before creating a channel
+      if (context.user){
+        const channelData = await Channel.create({ users: users, channelName });
+        console.log(channelData);
+  
+        const updatePromises = users.map((u) =>
+          User.findOneAndUpdate(
+            { _id: u._id },
+            { $push: { channelModel: channelData } },
+            { new: true }
+          )
+        );
+        Promise.all(updatePromises).then(console.log).catch(console.error);
+        return channelData;
+      }
+      throw new AuthenticationError(
+        "You need to be logged in!"
+      )
+     
     },
     sendMessage: async (parent, { channelId, textValue, senderId }) => {
       //we will first create a message get id and then grab the value from the message table
