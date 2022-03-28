@@ -5,6 +5,17 @@ const {signToken} = require('../utils/auth')
 
 const resolvers = {
   Query: {
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id })
+        .populate("channelModel")
+        .populate("friends")
+        return userData;
+      }
+
+      throw new AuthenticationError("Not logged in");
+    },
+
     users: async (p, { username }) => {
       const params = username ? { username } : {};
       return await User.find(params).populate('channelModel');

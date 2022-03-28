@@ -4,13 +4,30 @@ import {Link} from 'react-router-dom'
 
 import './welcomepage.css'
 
-export default function index() {
+import { useQuery } from '@apollo/client'
+import {QUERY_ME} from '../../utils/queries'
+
+export default function WelcomePage() {
     const loggedIn = Auth.loggedIn();
-    console.log(loggedIn)
+    console.log("Logged in: ",loggedIn)
+
+    const {loading, data} = useQuery(QUERY_ME);
+    console.log("User Data: ",data)
+    if(loading){
+        console.log('Loading')
+        return <div>Loading...</div>
+      
+    }
+  
+
+
+
     return (
         <div className="welcome-div">
             <h1>Welcome Page</h1>
-      
+        {loggedIn && data ? (
+            <h1>{data.me.username}</h1>
+        ): null}
             <button>
         {loggedIn ? (
             <Link to="/dashboard">Dashboard</Link>

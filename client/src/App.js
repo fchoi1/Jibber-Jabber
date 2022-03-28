@@ -25,8 +25,15 @@ import Channel from './pages/Channel';
 import Signup from './components/Signup/signup'
 import Login from './components/Login/login'
 
+let e_string = ""
+if(process.env.NODE_ENV === "development"){
+  e_string = "http://localhost:3001/graphql"
+} else{
+   e_string = "/graphql"
+}
+
 // Apollo client stuff
-const httpLink = createHttpLink({ uri: '/graphql' });
+const httpLink = createHttpLink({ uri: e_string });
 // dont need to use first argument of setContext (request)
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('id_token');
