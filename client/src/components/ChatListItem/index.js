@@ -43,8 +43,6 @@ const ChatListItem = (props) => {
 
   const usersList = channel.users.filter((user) => user.name !== currUser);
 
-  console.log(usersList);
-
   return (
     <Link href={`/channel`} style={{ textDecoration: 'none' }}>
       <ListItem alignItems="flex-start">

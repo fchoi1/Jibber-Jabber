@@ -15,10 +15,10 @@ import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import './channel.css';
 
 // SocketIO
-import { SocketContext } from '../context/socket';
+import { useSocket } from '../contexts/socket';
 
 const Channel = (props) => {
-  const socket = useContext(SocketContext); //Socket context
+  const socket = useSocket(); //Socket context
 
   const { channelId } = useParams(); // get channel ID
 

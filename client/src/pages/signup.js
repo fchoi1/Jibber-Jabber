@@ -1,10 +1,12 @@
 // Imports
 import React, { useState } from 'react';
 
-import { validateEmail } from '../../utils/helpers';
+import { validateEmail } from '../utils/helpers';
 
 import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../../utils/mutations';
+import { ADD_USER } from '../utils/mutations';
+
+import auth from '../utils/auth';
 
 // Main logic function
 const Signup = () => {
@@ -56,6 +58,7 @@ const Signup = () => {
           variables: { ...formState }
         });
         console.log(data);
+        auth.login(data.addUser.token); //redirects to login
       } catch (e) {
         console.error(e);
       }

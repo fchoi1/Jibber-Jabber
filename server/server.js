@@ -24,6 +24,10 @@ const io = socketio(httpServer, {
 io.on('connection', (socket) => {
   /* socket object may be used to send specific messages to the new connected client */
   console.log('new client connected', socket.id);
+
+  const id = socket.handshake.query.id;
+  socket.join(id);
+
   socket.emit('connection', null);
 
   newChat(io, socket);

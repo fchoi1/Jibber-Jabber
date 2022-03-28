@@ -8,21 +8,19 @@ import { Box, Grid } from '@mui/material';
 import './home.css';
 
 // SocketIO
-import { SocketContext } from '../context/socket';
+import { useSocket } from '../contexts/socket';
 
 import auth from '../utils/auth';
 
 const Home = () => {
-  const socket = useContext(SocketContext);
-
+  const socket = useSocket();
+  
   useEffect(() => {
+    if (!socket) return;
     socket.on('connection', () => {
       console.log(`I'm connected with the back-end`);
     });
   }, [socket]);
-
-
-
 
   return (
     <Box sx={{ flexGrow: 1 }}>
