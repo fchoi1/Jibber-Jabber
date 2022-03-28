@@ -31,6 +31,11 @@ const typeDefs = gql`
     friends: [User]
   }
 
+  type Auth {
+    token: ID!
+    user: User
+  }
+
   input Userss {
     _id: ID
   }
@@ -49,8 +54,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!): User
-    login(email: String!, password: String!): User
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
     createChannel(users: [Userss]!, channelName: String!): Channel
     sendMessage(channelId: ID, textValue: String!, senderId: ID!): Channel
     createMessage(textValue: String!): Message

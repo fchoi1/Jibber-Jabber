@@ -50,10 +50,11 @@ const Channel = (props) => {
     if (socket == null) return;
     socket.on('new-chat-update', (data) => {
       console.log('someone sent a signal a new message: ', data.textValue);
-      getChannel({
-        variables: { channelId: '623f88a6fda81384e8c40aad' },
-        onCompleted: (data) => setMessageList(data.singleChannel.messages)
-      });
+      // getChannel({
+      //   variables: { channelId: '623f88a6fda81384e8c40aad' },
+      //   onCompleted: (data) => setMessageList(data.singleChannel.messages)
+      // });
+      setMessageList((oldMessages) => [...oldMessages, data]);
     });
     return () => socket.off('new-chat-update');
   }, [socket, getChannel]);

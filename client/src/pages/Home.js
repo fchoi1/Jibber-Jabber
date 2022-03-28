@@ -10,6 +10,8 @@ import './home.css';
 // SocketIO
 import { SocketContext } from '../context/socket';
 
+import auth from '../utils/auth';
+
 const Home = () => {
   const socket = useContext(SocketContext);
 
@@ -18,6 +20,9 @@ const Home = () => {
       console.log(`I'm connected with the back-end`);
     });
   }, [socket]);
+
+
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
