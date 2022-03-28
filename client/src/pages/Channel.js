@@ -33,17 +33,23 @@ const Channel = (props) => {
         ))}
       </div>
       {/* map through all messages to show their content */}
-      <div>
+      
+
+      <div className='chat-box'>
+       
+
         {messages.map((message) => (
-          <div key={message._id}>
-            <Message
+          <div key={message._id} >
+            <Message 
               username={message.username}
               textContent={message.textContent}
               timeStamp={message.timeStamp}
-            />
+              />
           </div>
         ))}
+       
       </div>
+      
     </>
   );
 };
