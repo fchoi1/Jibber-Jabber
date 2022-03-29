@@ -63,8 +63,7 @@ function App() {
                   path="/"
                   element={auth.loggedIn() ? <Home /> : <Homepage />}
                 />
-                )
-                <Route exact path="/channel" element={<Channel />} />
+                <Route exact path="/channel/:channelId" element={<Channel />} />
                 <Route path="*" element={<div>Page not Found</div>} />
                 {/* <Route exact path="/saved" component={SavedBooks} />
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} /> */}

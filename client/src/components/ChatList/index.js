@@ -1,36 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Divider, List } from '@mui/material';
 
 import ChatListItem from '../ChatListItem';
-import { QUERY_CHANNEL } from '../../utils/queries';
+import { QUERY_CHANNEL_ME } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
 
-const ChatList = ({ channels }) => {
-
-  const channel1 = {
-    users: [
-      { name: 'John', isOnline: true },
-      { name: 'Bob', isOnline: true },
-      { name: 'Jake', isOnline: true },
-      { name: 'Leo', isOnline: false },
-      { name: 'Nathan', isOnline: false },
-      { name: 'Lucas', isOnline: true },
-      { name: 'Alex', isOnline: false }
-    ],
-    messages: { sender: 'Bob', textValue: 'this is a test message' },
-
-    channelName: 'test Channel'
-  };
-
-  const channel2 = {
-    users: [
-      { name: 'John', isOnline: true },
-      { name: 'Bob', isOnline: true }
-    ],
-    messages: { sender: 'Bob', textValue: 'this is a test message' },
-
-    channelName: 'test Channel'
-  };
+const ChatList = ({ channelIdList, friends }) => {
+  const { loading, data: channelData } = useQuery(QUERY_CHANNEL_ME);
+  const channels = channelData?.channels;
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -39,7 +19,7 @@ const ChatList = ({ channels }) => {
         {channels &&
           channels.map((channel) => (
             <div key={channel._id}>
-              <ChatListItem channel={channel1} />
+              <ChatListItem channel={channel} />
               <Divider />
             </div>
           ))}

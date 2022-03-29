@@ -30,12 +30,33 @@ export const QUERY_ME = gql`
       email
       channelModel {
         _id
-        channelName
       }
       friends {
         _id
         username
         email
+      }
+    }
+  }
+`;
+
+export const QUERY_CHANNEL_ME = gql`
+  query queryChannels($user: ID) {
+    channels(user: $user) {
+      channelName
+      _id
+      users {
+        _id
+        username
+        email
+      }
+      messages {
+        textValue
+        createdAt
+        sender {
+          _id
+          username
+        }
       }
     }
   }

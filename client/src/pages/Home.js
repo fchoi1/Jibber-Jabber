@@ -13,15 +13,10 @@ import './home.css';
 // SocketIO
 import { useSocket } from '../contexts/socket';
 
-import auth from '../utils/auth';
-
 const Home = () => {
   const { data: userData, loading } = useQuery(QUERY_ME);
   const socket = useSocket();
-  console.log(userData);
   const { channelModel: channels, friends } = userData?.me || {};
-
-  console.log(channels, friends);
 
   useEffect(() => {
     if (!socket) return;
@@ -50,7 +45,7 @@ const Home = () => {
           <FriendListMobile friends={friends} />
         </Grid>
         <Grid item xs={8} sx={{ border: 'solid' }}>
-          <ChatList friends={friends} channels={channels} />
+          <ChatList friends={friends} channelIdList={channels} />
         </Grid>
         <Grid
           item

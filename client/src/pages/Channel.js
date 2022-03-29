@@ -11,6 +11,8 @@ import { QUERY_CHANNEL } from '../utils/queries';
 import { SEND_MESSAGE } from '../utils/mutations';
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 
+import auth from '../utils/auth';
+
 // Css
 import './channel.css';
 
@@ -18,6 +20,8 @@ import './channel.css';
 import { useSocket } from '../contexts/socket';
 
 const Channel = (props) => {
+  const currUser = auth.getProfile().data; // get current user logged in
+
   const socket = useSocket(); //Socket context
 
   const { channelId } = useParams(); // get channel ID
@@ -40,22 +44,22 @@ const Channel = (props) => {
   useEffect(() => {
     console.log('calling once');
 
+    if (socket) socket.emit('joined a room', channelId);
+
     getChannel({
-      variables: { channelId: '623f88a6fda81384e8c40aad' },
-      onCompleted: (data) => {setMessageList(data.singleChannel.messages) 
-        setChannelName(data.singleChannel.channelName)
-        setUsers(data.singleChannel.users)}
+      variables: { channelId },
+      onCompleted: (data) => {
+        setMessageList(data.singleChannel.messages);
+        setChannelName(data.singleChannel.channelName);
+        setUsers(data.singleChannel.users);
+      }
     });
-  }, [getChannel]);
+  }, [getChannel, channelId, socket]);
 
   useEffect(() => {
     if (socket == null) return;
     socket.on('new-chat-update', (data) => {
       console.log('someone sent a signal a new message: ', data.textValue);
-      // getChannel({
-      //   variables: { channelId: '623f88a6fda81384e8c40aad' },
-      //   onCompleted: (data) => setMessageList(data.singleChannel.messages)
-      // });
       setMessageList((oldMessages) => [...oldMessages, data]);
     });
     return () => socket.off('new-chat-update');
@@ -67,20 +71,21 @@ const Channel = (props) => {
 
   const handleSendMessage = async (event) => {
     event.preventDefault();
-
+    console.log('sending message to channel', channelId);
     const messageFormData = {
       textValue: message,
-      senderId: '623bc8d72e7e0cc89212673a',
-      channelId: '623f88a6fda81384e8c40aad'
+      senderId: currUser._id,
+      channelId: channelId
     };
 
     try {
       // call mutation
       const updatedChannel = await sendMessage({ variables: messageFormData });
 
+      // grabs last message
       const messageData = updatedChannel.data.sendMessage.messages.at(-1);
 
-      socket.emit('newChat', messageData);
+      socket.emit('newChat', { messageData, channelId });
 
       setMessage('');
     } catch (e) {
@@ -138,40 +143,3 @@ const Channel = (props) => {
 };
 
 export default Channel;
-
-// {
-//   "data": {
-//     "singleChannel": {
-//       "_id": "623f88a6fda81384e8c40aad",
-//       "users": [
-//         {
-//           "username": "test",
-//           "_id": "623bb62e48768e4b9aeebbcc"
-//         },
-//         {
-//           "username": "test2",
-//           "_id": "623bc8d72e7e0cc89212673a"
-//         }
-//       ],
-//       "messages": [
-//         {
-//           "textValue": "test message 2",
-//           "sender": {
-//             "username": "test",
-//             "_id": "623bb62e48768e4b9aeebbcc"
-//           },
-//           "createdAt": "Mar 26th, 2022 at 8:48 pm"
-//         },
-//         {
-//           "textValue": "test message 2",
-//           "sender": {
-//             "username": "test",
-//             "_id": "623bb62e48768e4b9aeebbcc"
-//           },
-//           "createdAt": "Mar 26th, 2022 at 8:49 pm"
-//         }
-//       ],
-//       "channelName": "test channel"
-//     }
-//   }
-// }

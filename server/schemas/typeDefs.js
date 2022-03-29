@@ -47,7 +47,8 @@ const typeDefs = gql`
   type Query {
     users(username: String): [User]
     singleChannel(channelId: ID!): Channel
-    channels: [Channel]
+    channels(user: ID): [Channel]
+    channelMe: [Channel]
     messages: [Message]
     deleteChannels: Channel
     deleteMessages: Message

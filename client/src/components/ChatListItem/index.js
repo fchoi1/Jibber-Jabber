@@ -10,6 +10,8 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
+import auth from '../../utils/auth';
+
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
@@ -20,41 +22,29 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
       width: '100%',
       height: '100%',
       borderRadius: '50%',
-      //   animation: 'ripple 1.2s infinite ease-in-out',
       border: '1px solid currentColor'
-      //   content: '""'
     }
   }
-  //   '@keyframes ripple': {
-  //     '0%': {
-  //       transform: 'scale(.8)',
-  //       opacity: 1
-  //     },
-  //     '100%': {
-  //       transform: 'scale(2.4)',
-  //       opacity: 0
-  //     }
-  //   }
 }));
 
-const ChatListItem = ({channel}) => {
-  const currUser = 'Bob';
+const ChatListItem = ({ channel }) => {
+  const currUser = auth.getProfile().data;
 
-  const usersList = channel.users.filter((user) => user.name !== currUser);
+  const usersList = channel.users.filter((user) => user._id !== currUser._id);
 
   return (
-    <Link href={`/channel`} style={{ textDecoration: 'none' }}>
+    <Link href={`/channel/${channel._id}`} style={{ textDecoration: 'none' }}>
       <ListItem alignItems="flex-start">
         <AvatarGroup max={4} sx={{ pr: 1 }}>
           {usersList.map((user) => (
             <StyledBadge
-              key={user.name}
+              key={user._id}
               overlap="circular"
               color={user.isOnline ? 'primary' : 'secondary'}
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               variant="dot"
             >
-              <Avatar alt={user.name} src="/static/images/avatar/1.jpg" />
+              <Avatar alt={user.username} src="/static/images/avatar/1.jpg" />
             </StyledBadge>
           ))}
         </AvatarGroup>

@@ -19,6 +19,14 @@ const resolvers = {
         .populate('users')
         .populate({ path: 'messages', populate: { path: 'sender' } });
     },
+    channelMe: async (p, arg, context) => {
+      if (context.user) {
+        return await Channel.find({ users: { _id: context.user._id } })
+          .populate('users')
+          .populate({ path: 'messages', populate: { path: 'sender' } });
+      }
+      throw new AuthenticationError('Not logged in');
+    },
     messages: async (p, args) => {
       return Message.find({}).populate('sender');
     },
@@ -34,7 +42,6 @@ const resolvers = {
           .select('-__v -password')
           .populate('channelModel')
           .populate('friends');
-        console.log(userData);
         return userData;
       }
       throw new AuthenticationError('Not logged in');
@@ -94,8 +101,8 @@ const resolvers = {
         sender: senderId
       });
       //we can use the textvalue to update the channel
-      return Channel.findOneAndUpdate(
-        { channelId },
+      return Channel.findByIdAndUpdate(
+        { _id: channelId },
         { $push: { messages: msgId } },
         { new: true }
       )
