@@ -26,7 +26,6 @@
     "graphql": "^16.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.7",
-    "node-dev": "^7.2.0",
-    "socket.io": "^4.4.1"
+    "node-dev": "^7.2.0"
   }
 }

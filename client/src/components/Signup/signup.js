@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { validateEmail } from '../../utils/helpers';
 
 import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../../utils/mutations';
+import { Mutation_signup  } from '../../utils/mutations';
 import Auth from "../../utils/auth"
 import {Link} from 'react-router-dom'
 
@@ -17,7 +17,7 @@ const Signup = () => {
   });
 
   const { username, email, password } = formState;
-  const [addUser, { error }] = useMutation(ADD_USER);
+  const [addUser, { error }] = useMutation(Mutation_signup );
 
   const [errorMessage, setErrorMessage] = useState('');
 
