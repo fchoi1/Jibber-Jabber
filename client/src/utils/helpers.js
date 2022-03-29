@@ -26,8 +26,7 @@ function timeSince(date) {
     return Math.floor(seconds) + " seconds";
   }
   var aDay = 24*60*60*1000;
-  console.log(timeSince(new Date(Date.now()-aDay)));
-  console.log(timeSince(new Date(Date.now()-aDay*2)));
+
 
   export function validateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

@@ -26,7 +26,6 @@ const Header = () => {
         {loggedIn && (
           <>
             <Link to="/dashboard">Dashboard</Link>
-            <Link to="/channel">Channel</Link>
             <a href="/" onClick={logout}>
               Logout
             </a>

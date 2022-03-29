@@ -42,6 +42,7 @@ query me{
           username
         }
       }
+      createdAt
     }
   }
 }`

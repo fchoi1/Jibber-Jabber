@@ -81,6 +81,7 @@ const Signup = () => {
             placeholder="Username"
             defaultValue={username}
             onBlur={handleChange}
+            minLength="4"
           />
         </div>
 

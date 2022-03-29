@@ -1,0 +1,43 @@
+.chatContainer {
+  border: 1px white solid;
+  border-radius: 12px;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 1rem;
+}
+
+.chatContainer h2 {
+  text-align: center;
+}
+
+.recentChats {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatItemContainer {
+  margin: 0.5rem 0;
+}
+
+.created-at {
+  margin: 0 1rem;
+  text-align: end;
+}
+
+.chatItem {
+  border: 1px white solid;
+  border-radius: 12px;
+
+  padding: 1rem;
+}
+
+.chatLink {
+  color: white;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+
+}

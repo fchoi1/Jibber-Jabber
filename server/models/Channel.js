@@ -2,6 +2,7 @@
 //every channel will have a users array which will share their respective texts
 //also it will contain the messages array containing the texts that were exchanged...
 const {Schema, model}  = require("mongoose")
+const dateFormat = require('../utils/dateFormat')
 const channelSchema = new Schema({
 
     users:[
@@ -20,6 +21,7 @@ const channelSchema = new Schema({
         type:Date,
         default:Date.now,
         //formatting the date to be done
+        get: timestamp => dateFormat(timestamp)
     }
 
 },
