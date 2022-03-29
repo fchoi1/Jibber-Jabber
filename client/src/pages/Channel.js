@@ -111,15 +111,25 @@ const Channel = (props) => {
       <Container sx={{ border: 'solid', padding: '10px' }}>
         {/* map through all messages to show their content */}
         <div>
-          {messageList.map((message) => (
-            <div key={message._id}>
-              <Message
-                username={message.sender.username}
-                textContent={message.textValue}
-                createdAt={message.createdAt}
-              />
-            </div>
-          ))}
+          {messageList.map((message) => {
+            return message.sender._id === currUser._id ? (
+              <div key={message._id} align="right">
+                <Message
+                  username={message.sender.username}
+                  textContent={message.textValue}
+                  createdAt={message.createdAt}
+                />
+              </div>
+            ) : (
+              <div key={message._id} align="left">
+                <Message
+                  username={message.sender.username}
+                  textContent={message.textValue}
+                  createdAt={message.createdAt}
+                />
+              </div>
+            );
+          })}
         </div>
         <form className="textMessageForm" onSubmit={handleSendMessage}>
           <TextField

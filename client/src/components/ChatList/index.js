@@ -5,9 +5,11 @@ import ChatListItem from '../ChatListItem';
 import { QUERY_CHANNEL_ME } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
 
-const ChatList = ({ channelIdList, friends }) => {
+const ChatList = ({ friends }) => {
   const { loading, data: channelData } = useQuery(QUERY_CHANNEL_ME);
-  const channels = channelData?.channels;
+  const channels = channelData?.channelMe;
+
+  console.log(channels)
   if (loading) {
     return <div>Loading...</div>;
   }

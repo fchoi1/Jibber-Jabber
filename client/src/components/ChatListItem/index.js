@@ -29,8 +29,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const ChatListItem = ({ channel }) => {
   const currUser = auth.getProfile().data;
-
   const usersList = channel.users.filter((user) => user._id !== currUser._id);
+  console.log(channel);
 
   return (
     <Link href={`/channel/${channel._id}`} style={{ textDecoration: 'none' }}>
@@ -48,13 +48,16 @@ const ChatListItem = ({ channel }) => {
             </StyledBadge>
           ))}
         </AvatarGroup>
+
         <ListItemText
           primary={channel.channelName}
           secondary={
-            <>
-              <strong>{channel.messages.sender}</strong> -{' '}
-              {channel.messages.textValue}
-            </>
+            channel.messages.length > 0 && (
+              <>
+                <strong>{channel.messages.at(-1).sender.username}</strong> -{' '}
+                {channel.messages.at(-1).textValue}
+              </>
+            )
           }
         />
       </ListItem>

@@ -41,22 +41,21 @@ export const QUERY_ME = gql`
 `;
 
 export const QUERY_CHANNEL_ME = gql`
-  query queryChannels($user: ID) {
-    channels(user: $user) {
-      channelName
+  query ChannelMe {
+    channelMe {
       _id
       users {
         _id
         username
         email
       }
+      channelName
       messages {
         textValue
-        createdAt
         sender {
-          _id
           username
         }
+        createdAt
       }
     }
   }

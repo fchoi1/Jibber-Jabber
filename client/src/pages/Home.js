@@ -17,7 +17,7 @@ const Home = () => {
   const { data: userData, loading } = useQuery(QUERY_ME);
   const socket = useSocket();
   const { channelModel: channels, friends } = userData?.me || {};
-
+  
   useEffect(() => {
     if (!socket) return;
     socket.on('connection', () => {
@@ -45,7 +45,7 @@ const Home = () => {
           <FriendListMobile friends={friends} />
         </Grid>
         <Grid item xs={8} sx={{ border: 'solid' }}>
-          <ChatList friends={friends} channelIdList={channels} />
+          <ChatList friends={friends} />
         </Grid>
         <Grid
           item
