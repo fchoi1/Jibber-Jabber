@@ -10,17 +10,6 @@ export default function Chats(){
     
     //const [recentChats,setChats] = useState([])
     const {loading,data} = useQuery(Query_Me)
-    
-    
-    
-    // useEffect(()=>{
-    //     //console.log(search)
-    //     if(data) {
-    //         console.log("users found")
-    //     }else{
-    //         console.log("nothing found")
-    //     }
-    // })
     if(loading) return "Loading..."
     //console.log(Auth.getProfile().data.username)
     const chats = data.me.channelModel;
@@ -53,13 +42,13 @@ export default function Chats(){
 
             chats.map(ch=>{
                 return <div className="border border-dark p-3 m-1" >
-                    { ch.users.filter(v=>{
+                    { ch.users.filter((v,i)=>{
                         if(v.username !== Auth.getProfile().data.username){
                             return v.username
                             }
-                    }).map(g=>{
+                    }).map((g,l)=>{
                         //{console.log(ch._id)}
-                        return <Link to={`/chat/${ch._id}/${g._id}`}>{g.username}</Link>
+                        return <Link key={l} to={`/chat/${ch._id}/${g._id}`}>{g.username}</Link>
                     })
                 }       
             </div>

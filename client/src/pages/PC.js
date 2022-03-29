@@ -57,24 +57,24 @@ export default function PC(){
         console.log(data.channel.messages)
     }
     return (
-        <div className="border border-dark m-4">
+        <div className="border border-dark m-4 ">
             {
                 data ? data.channel.messages.map(msg=>{
-                    if(msg.sender._id === senderId) return <p className="border m-3 text-center">{msg.textValue}</p>
+                    if(msg.sender._id === senderId) return <p className="border m-3" style={{textAlign:"right"}}>{msg.textValue}</p>
                     else return(
-                        <p className="border m-3 text-left">{msg.textValue}</p>
+                        <p className="border m-3" style={{textAlign:"left"}}>{msg.textValue}</p>
                     )
                 }) : "Loading"
             }
         
 
 
-            <div className="p-3 text-center">
+            <div className="p-3 " style={{textAlign:"right"}}>
                 <Form onSubmit={sendMessage}>
                     <input type="text" onChange={(e)=>{
                         setMessage(e.target.value) 
                     }} value={msg} placeholder="Your message..." />
-                    <input type="submit" />
+                    <input type="submit"  />
                 </Form>        
             </div>
         </div>

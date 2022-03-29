@@ -49,11 +49,20 @@ query me{
 export const Mutation_findUser = gql`
 mutation($email: String!){
   findUser(email: $email) {
+    _id
     username
   }
 }
 `
-
+export const Mutation_createChannel = gql`
+mutation createChannel($users: [Userss]!){
+  createChannel(users: $users){
+    users {
+      _id
+    }
+  }
+    
+}`
 export const Mutation_Login = gql`
 mutation login($email: String!, $password: String!){
   login(email: $email, password: $password) {
