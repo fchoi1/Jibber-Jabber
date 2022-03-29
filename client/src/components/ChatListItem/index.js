@@ -37,9 +37,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   //   }
 }));
 
-const ChatListItem = (props) => {
+const ChatListItem = ({channel}) => {
   const currUser = 'Bob';
-  const { channel } = props;
 
   const usersList = channel.users.filter((user) => user.name !== currUser);
 

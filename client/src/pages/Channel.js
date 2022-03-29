@@ -7,7 +7,7 @@ import Message from '../components/Message';
 import { Box } from '@mui/material';
 
 import { useParams } from 'react-router-dom';
-import { QUERY_CHANNELS } from '../utils/queries';
+import { QUERY_CHANNEL } from '../utils/queries';
 import { SEND_MESSAGE } from '../utils/mutations';
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 
@@ -24,15 +24,15 @@ const Channel = (props) => {
 
   //get channel data from query
   const [getChannel, { loading, data: channelData }] =
-    useLazyQuery(QUERY_CHANNELS);
+    useLazyQuery(QUERY_CHANNEL);
 
   const [sendMessage, { error }] = useMutation(SEND_MESSAGE);
 
-  const { messages, users, channelName } = channelData
-    ? channelData.singleChannel
-    : { messages: [], users: [], channelName: '' };
-
   // for the send message form
+  const [users, setUsers] = useState([]);
+
+  const [channelName, setChannelName] = useState('');
+
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
 
@@ -42,7 +42,9 @@ const Channel = (props) => {
 
     getChannel({
       variables: { channelId: '623f88a6fda81384e8c40aad' },
-      onCompleted: (data) => setMessageList(data.singleChannel.messages)
+      onCompleted: (data) => {setMessageList(data.singleChannel.messages) 
+        setChannelName(data.singleChannel.channelName)
+        setUsers(data.singleChannel.users)}
     });
   }, [getChannel]);
 

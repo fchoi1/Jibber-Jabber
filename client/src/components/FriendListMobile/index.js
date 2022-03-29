@@ -5,7 +5,7 @@ import ScrollContainer from 'react-indiana-drag-scroll';
 import FriendListItem from '../FriendListItem';
 import './friendlistmobile.css';
 
-const FriendListMobile = () => {
+const FriendListMobile = ({friends}) => {
   return (
     <ScrollContainer className="mobile-scroll-container">
       <Stack

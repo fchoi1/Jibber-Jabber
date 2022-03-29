@@ -2,8 +2,11 @@ import React from 'react';
 import { Divider, List } from '@mui/material';
 
 import ChatListItem from '../ChatListItem';
+import { QUERY_CHANNEL } from '../../utils/queries';
+import { useQuery } from '@apollo/client';
 
-const ChatList = () => {
+const ChatList = ({ channels }) => {
+
   const channel1 = {
     users: [
       { name: 'John', isOnline: true },
@@ -30,14 +33,20 @@ const ChatList = () => {
   };
 
   return (
-  <>
-    <h2 style={{paddingLeft: "16px"}}>Your recent chats!</h2>
-    <List dense={true}>
-      <ChatListItem channel={channel1} />
-      <Divider />
-      <ChatListItem channel={channel2} />
-      <Divider />
-    </List>
+    <>
+      <h2 style={{ paddingLeft: '16px' }}>Your recent chats!</h2>
+      <List dense={true}>
+        {channels &&
+          channels.map((channel) => (
+            <div key={channel._id}>
+              <ChatListItem channel={channel1} />
+              <Divider />
+            </div>
+          ))}
+
+        {/* <ChatListItem channel={channel2} />
+        <Divider /> */}
+      </List>
     </>
   );
 };

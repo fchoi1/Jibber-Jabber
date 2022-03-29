@@ -1,7 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Message, Channel } = require('../models');
 //import signToken function
-const {signToken} = require('../utils/auth')
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
@@ -27,6 +27,17 @@ const resolvers = {
     },
     deleteMessages: async (p, args) => {
       return Message.deleteMany({});
+    },
+    me: async (p, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id })
+          .select('-__v -password')
+          .populate('channelModel')
+          .populate('friends');
+        console.log(userData);
+        return userData;
+      }
+      throw new AuthenticationError('Not logged in');
     }
   },
   Mutation: {
@@ -35,9 +46,8 @@ const resolvers = {
       //jwt token stuff goes here
       const token = signToken(user);
 
-      return {token,user};
+      return { token, user };
     },
-
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user) {
@@ -48,14 +58,19 @@ const resolvers = {
         return new AuthenticationError('Invalid Credentials');
       }
       //JWT stuff goes here
-      const token = signToken(user)
-      return {token, user};
+      const token = signToken(user);
+      return { token, user };
     },
-    createChannel: async (parent, { users, channelName }) => {
-      const channelData = await Channel.create({ users: users, channelName });
-      console.log(channelData);
+    createChannel: async (parent, { users, channelName }, context) => {
+      if (!context.user) throw new AuthenticationError('Not logged in');
 
-      const updatePromises = users.map((u) =>
+      console.log('user in auth:', [...users, context.user._id]);
+      const channelData = await Channel.create({
+        users: [...users, { _id: context.user._id }],
+        channelName
+      });
+
+      const updatePromises = [...users, { _id: context.user._id }].map((u) =>
         User.findOneAndUpdate(
           { _id: u._id },
           { $push: { channelModel: channelData } },
@@ -65,9 +80,15 @@ const resolvers = {
       Promise.all(updatePromises).then(console.log).catch(console.error);
       return channelData;
     },
-    sendMessage: async (parent, { channelId, textValue, senderId }) => {
+    sendMessage: async (
+      parent,
+      { channelId, textValue, senderId },
+      context
+    ) => {
       //we will first create a message get id and then grab the value from the message table
       // senderId will be replaced with current logined
+      if (!context.user) throw new AuthenticationError('Not logged in');
+
       const msgId = await Message.create({
         textValue: textValue,
         sender: senderId
@@ -81,6 +102,17 @@ const resolvers = {
         .populate({ path: 'messages', populate: { path: 'sender' } })
         .populate('users');
       //return Channel.updateOne({_id},{$push:{messages:{}}})
+    },
+    addFriend: async (p, { user }, context) => {
+      if (!context.user) throw new AuthenticationError('Not logged in');
+      return await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { friends: user } },
+        { new: true }
+      )
+        .select('-__v -password')
+        .populate('channelModel')
+        .populate('friends');
     },
     createMessage: async (p, args) => {
       return Message.create(args);

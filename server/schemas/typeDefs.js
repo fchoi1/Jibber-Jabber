@@ -51,6 +51,7 @@ const typeDefs = gql`
     messages: [Message]
     deleteChannels: Channel
     deleteMessages: Message
+    me: User
   }
 
   type Mutation {
@@ -59,6 +60,7 @@ const typeDefs = gql`
     createChannel(users: [Userss]!, channelName: String!): Channel
     sendMessage(channelId: ID, textValue: String!, senderId: ID!): Channel
     createMessage(textValue: String!): Message
+    addFriend(user: ID!): User
   }
 `;
 module.exports = typeDefs;
