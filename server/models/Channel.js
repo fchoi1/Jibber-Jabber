@@ -22,7 +22,8 @@ const channelSchema = new Schema({
         default:Date.now,
         //formatting the date to be done
         get: timestamp => dateFormat(timestamp)
-    }
+    },
+   channelName: { type: String, required: true }
 
 },
 {

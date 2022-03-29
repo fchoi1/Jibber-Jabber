@@ -1,5 +1,5 @@
 import React from "react";
-import {Row,Col,Form,Button,Alert} from 'react-bootstrap'
+
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Mutation_findUser } from "../utils/mutations";
@@ -27,7 +27,7 @@ export default function Search(){
     }
     return (
         <div className="p-3 text-center">
-                <Form onSubmit={findPeople}>
+                <form onSubmit={findPeople}>
                     <input type="text" onChange={(e)=>{
                         setSearch(
                              e.target.value
@@ -35,7 +35,7 @@ export default function Search(){
                     }} value={search}  placeholder="Find new people..." />
 
                     <input type="submit" value="FIND" />
-                </Form>        
+                </form>        
             </div>
     )
 }

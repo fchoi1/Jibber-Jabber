@@ -1,6 +1,6 @@
 //this schema will contain all the messages
 const {Schema, model} = require("mongoose")
-import dateFormat from '../utils/dateFormat'
+const dateFormat  = require('../utils/dateFormat');
 
 const messageSchema = new Schema({
 

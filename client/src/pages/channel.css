@@ -1,0 +1,36 @@
+/* -------------container form------------- */
+.box{
+  border:1px white solid;
+}
+/* form */
+.textMessageForm {
+  width: 100%;
+  display: flex;
+  background-color: white;
+}
+
+/* button */
+.sendButton {
+  width: 5%;
+}
+
+/* textfield */
+.messageInput {
+  width: 100%;
+}
+
+
+/* -------------container chat------------- */
+
+.container {
+  border: 1px red solid;
+}
+
+.chat-container {
+  border: 1px yellow solid;
+}
+
+.message {
+  border: 1px orange solid;
+  margin: 1rem;
+}

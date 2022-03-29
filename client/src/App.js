@@ -16,14 +16,20 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import WelcomePage from './components/WelcomePage'
+import PC from './pages/PC'
 
 // CSS
 import './App.css';
 import Channel from './pages/Channel';
+import ChannelSocket from './pages/Channel-socket'
 
 // Sign up and Login
 import Signup from './components/Signup/signup'
 import Login from './components/Login/login'
+
+// Socket IO
+// import { SocketContext, socket } from './context/socket';
+import { SocketProvider } from './contexts/socket';
 
 let e_string = ""
 if(process.env.NODE_ENV === "development"){
@@ -56,14 +62,18 @@ function App() {
       <Router>
         <div id="page-container" className='mainSection' >
         <Header />
+     
           <div id="content-wrap" >
+          <SocketProvider>
             <Routes>
               <Route exact path="/" element={<WelcomePage></WelcomePage>}></Route>
               <Route exact path="/dashboard" element={<Home></Home>} />
               <Route exact path="/channel" element={<Channel></Channel>} />
               <Route exact path="/signup" element={<Signup></Signup>}/>
               <Route exact path='/login' element={<Login></Login>}/>
+              <Route exact path="/chat/:channelId" element={<ChannelSocket></ChannelSocket>}></Route>
             </Routes>
+          </SocketProvider>
           </div>        
           <Footer />
         </div>

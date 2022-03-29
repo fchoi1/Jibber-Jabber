@@ -61,7 +61,7 @@ mutation login($email: String!, $password: String!){
     token
     user {
       username
-      createdAt
+    
     }
   }
 }`
@@ -91,3 +91,26 @@ mutation sendMessage($id: ID, $textValue: String!, $senderId: Userss!){
   }
 }
 `
+
+
+export const SEND_MESSAGE = gql`
+  mutation SendMessage($textValue: String!, $senderId: ID!, $channelId: ID) {
+    sendMessage(
+      textValue: $textValue
+      senderId: $senderId
+      channelId: $channelId
+    ) {
+      _id
+      messages {
+        _id
+        textValue
+        sender {
+          _id
+          username
+          email
+        }
+        createdAt
+      }
+    }
+  }
+`;
