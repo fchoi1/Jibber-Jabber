@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 //Material UI
 import { Box, Button, Container, Grid, TextField, Paper } from '@mui/material';
@@ -18,6 +18,9 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import auth from '../utils/auth';
 import { useSocket } from '../contexts/socket';
 
+// Css
+import './channel.css';
+
 const GreyTextTypography = withStyles({
   root: {
     color: 'gray'
@@ -31,9 +34,6 @@ const theme = createTheme({
     }
   }
 });
-
-// Css
-// import './channel.css';
 
 // SocketIO
 
@@ -191,6 +191,7 @@ const Channel = (props) => {
             <Grid item sm={11}>
               <ThemeProvider theme={theme}>
                 <TextField
+                  autoComplete="off"
                   inputProps={{ style: { color: 'white' } }}
                   InputLabelProps={{
                     style: { color: '#fff' }

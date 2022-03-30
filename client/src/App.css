@@ -43,7 +43,10 @@ body {
   padding: 1rem;
 }
 
-#content-wrap {
+#content-wrap{
+    
+    height: auto;
+   
 }
 
 /* shared styles for main and sub sections */
