@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState} from 'react';
 
 //Material UI
-import { Box, Button, Container, TextField } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import Message from '../components/Message';
 
@@ -13,7 +13,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import auth from '../utils/auth';
 
 // Css
-// import './channel.css';
+import './channel.css';
 
 // SocketIO
 import { useSocket } from '../contexts/socket';
@@ -108,7 +108,7 @@ const Channel = (props) => {
         ))}
       </div>
 
-      <Container className="container">
+      <div className="containers">
         {/* map through all messages to show their content */}
         <div className="chat-container">
           {messageList.map((message) => {
@@ -132,7 +132,7 @@ const Channel = (props) => {
           })}
         </div>
         <form className="textMessageForm" onSubmit={handleSendMessage}>
-          <TextField
+          <input
             className="messageInput"
             label="send a message"
             onChange={onChange}
@@ -147,7 +147,7 @@ const Channel = (props) => {
             <SendIcon />
           </Button>
         </form>
-      </Container>
+      </div>
     </Box>
   );
 };

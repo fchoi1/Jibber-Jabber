@@ -1,36 +1,58 @@
-/* -------------container form------------- */
-.box{
-  border:1px white solid;
+.box {
+  border: 1px white solid;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  height: 77vh;
 }
+
+/* -------------container form------------- */
+
 /* form */
 .textMessageForm {
-  width: 100%;
   display: flex;
-  background-color: white;
+  justify-content: center;
+  margin-top: 1rem;
 }
-
 /* button */
 .sendButton {
-  width: 5%;
-}
 
+}
 /* textfield */
 .messageInput {
-  width: 100%;
+  flex: 1;
+  border: none;
+  padding: 1rem;
+  border-radius: 5px;
+  
 }
 
+.messageInput:focus {
+  border: none;
+}
 
 /* -------------container chat------------- */
 
-.container {
-  border: 1px red solid;
+.containers {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  
 }
 
 .chat-container {
-  border: 1px yellow solid;
+  border: 1px white solid;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+
+  overflow: auto;
+
 }
 
 .message {
   border: 1px orange solid;
   margin: 1rem;
+  padding: 1rem;
 }

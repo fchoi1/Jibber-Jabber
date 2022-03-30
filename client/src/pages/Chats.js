@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Auth from '../utils/auth';
 import { useMutation, useQuery } from '@apollo/client';
 import { QUERY_CHANNEL_ME } from '../utils/queries';
-import { setContext } from '@apollo/client/link/context';
+
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Search from './SearchBar';
@@ -47,15 +47,20 @@ export default function Chats() {
           : chats.map((ch) => {
               console.log('channels: ', ch);
               return (
-                <Link
+                <div className="chatBox">
+                  <div className="headerContainer">
+                        <h3>{ch.channelName}</h3>
+                        <p className="created-at">Created on: {ch.createdAt}</p>
+                  </div>
+                  <p className="users">User(s): </p>
+                  <Link
                 key={ch._id}
                 className="chatLink"
                 to={`/chat/${ch._id}`}
               >
                 <div className="chatItemContainer">
-             
+                
                   <div className="chatItem">
-                  <p className="created-at">Created on: {ch.createdAt}</p>
                     {ch.users
                       .filter((v) => {
                         if (v.username !== Auth.getProfile().data.username) {
@@ -73,6 +78,7 @@ export default function Chats() {
                   </div>
                 </div>
                 </Link>
+                </div>
               );
             })}
       </div>
