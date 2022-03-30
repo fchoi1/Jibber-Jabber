@@ -48,7 +48,6 @@ function SearchBarUser(props) {
     const userId = e.target.dataset.userid;
     const username = e.target.value;
 
-    console.log("user chats", chats);
 
     for (let i = 0; i < chats.length; i++) {
       const checkuserlist = chats[i].users.filter(
