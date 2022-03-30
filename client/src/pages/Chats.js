@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Auth from '../utils/auth';
 import { useMutation, useQuery } from '@apollo/client';
 import { QUERY_CHANNEL_ME } from '../utils/queries';
-import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import SearchBarUser from '../components/searchBarUser';
 import './chats.css';
 
 export default function Chats() {
+  const loggedIn = Auth.loggedIn();
+
   //const [recentChats,setChats] = useState([])
   const { loading, data } = useQuery(QUERY_CHANNEL_ME);
 
@@ -35,6 +36,8 @@ export default function Chats() {
       }
     });
   });
+
+
   return (
     <div className="chatContainer">
       <h2>Welcome {Auth.getProfile().data.username}</h2>
