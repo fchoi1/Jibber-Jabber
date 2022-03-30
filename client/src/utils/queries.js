@@ -1,0 +1,80 @@
+import { gql } from "@apollo/client";
+
+export const QUERY_CHANNEL = gql`
+  query SingleChannel($channelId: ID!) {
+    singleChannel(channelId: $channelId) {
+      _id
+      users {
+        username
+        _id
+      }
+      messages {
+        textValue
+        sender {
+          username
+          _id
+        }
+        createdAt
+        _id
+      }
+      channelName
+    }
+  }
+`;
+
+export const QUERY_ME = gql`
+  query Me {
+    me {
+      _id
+      username
+      email
+      channelModel {
+        _id
+      }
+      friends {
+        _id
+        username
+        email
+      }
+    }
+  }
+`;
+
+export const QUERY_CHANNEL_ME = gql`
+  query ChannelMe {
+    channelMe {
+      _id
+      users {
+        _id
+        username
+        email
+      }
+      channelName
+      messages {
+        textValue
+        sender {
+          username
+        }
+        createdAt
+      }
+    }
+  }
+`;
+
+export const QUERY_ALL_USERS = gql`
+  query queryUsers($username: String) {
+    users(username: $username) {
+      username
+      email
+      channelModel {
+        channelName
+        _id
+      }
+      _id
+      friends {
+        _id
+        username
+      }
+    }
+  }
+`;

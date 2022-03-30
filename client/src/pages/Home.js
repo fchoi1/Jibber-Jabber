@@ -14,7 +14,7 @@ function Home(){
       
     return (
         <div>
-           {Auth.loggedIn() ? <Chats/> : ""}
+           {Auth.loggedIn() ? <Chats/> : <></>}
         </div>
     )
 }
