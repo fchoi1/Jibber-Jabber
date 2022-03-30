@@ -1,5 +1,7 @@
 import React from 'react';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import './footer.css';
 import { SocialIcon } from 'react-social-icons';
 function DisplayFooter() {
   return (

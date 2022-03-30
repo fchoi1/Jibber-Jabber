@@ -15,27 +15,30 @@ import { setContext } from '@apollo/client/link/context';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import WelcomePage from './components/WelcomePage'
-import PC from './pages/PC'
+import WelcomePage from './components/WelcomePage';
+import NotFound from './pages/notFound';
+import PC from './pages/PC';
 
 // CSS
 import './App.css';
 import Channel from './pages/Channel';
-import ChannelSocket from './pages/Channel-socket'
+import ChannelSocket from './pages/Channel-socket';
 
 // Sign up and Login
-import Signup from './components/Signup/signup'
-import Login from './components/Login/login'
+import Signup from './components/Signup/signup';
+import Login from './components/Login/login';
+import Auth from './utils/auth';
 
 // Socket IO
 // import { SocketContext, socket } from './context/socket';
 import { SocketProvider } from './contexts/socket';
+import Chats from './pages/Chats';
 
-let e_string = ""
-if(process.env.NODE_ENV === "development"){
-  e_string = "http://localhost:3001/graphql"
-} else{
-   e_string = "/graphql"
+let e_string = '';
+if (process.env.NODE_ENV === 'development') {
+  e_string = 'http://localhost:3001/graphql';
+} else {
+  e_string = '/graphql';
 }
 
 // Apollo client stuff
@@ -60,21 +63,44 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div id="page-container" className='mainSection' >
-        <Header />
-     
-          <div id="content-wrap" >
-          <SocketProvider>
-            <Routes>
-              <Route exact path="/" element={<WelcomePage></WelcomePage>}></Route>
-              <Route exact path="/dashboard" element={<Home></Home>} />
-              <Route exact path="/channel" element={<Channel></Channel>} />
-              <Route exact path="/signup" element={<Signup></Signup>}/>
-              <Route exact path='/login' element={<Login></Login>}/>
-              <Route exact path="/chat/:channelId" element={<ChannelSocket></ChannelSocket>}></Route>
-            </Routes>
-          </SocketProvider>
-          </div>        
+        <div id="page-container" className="mainSection">
+          <div id="content-wrap">
+            <Header />
+
+            <SocketProvider>
+              <Routes>
+                <Route
+                  exact
+                  path="/"
+                  element={<WelcomePage></WelcomePage>}
+                ></Route>
+                <Route exact path="/" element={<Home></Home>} />
+                {Auth.loggedIn() ? (
+                  <>
+                    <Route exact path="/dashboard" element={<Chats></Chats>} />
+                    <Route
+                      exact
+                      path="/channel"
+                      element={<Channel></Channel>}
+                    />{' '}
+                  </>
+                ) : (
+                  <>
+                    <Route exact path="/signup" element={<Signup></Signup>} />
+                    <Route exact path="/login" element={<Login></Login>} />{' '}
+                  </>
+                )}
+
+                <Route exact path="*" element={<NotFound></NotFound>} />
+
+                <Route
+                  exact
+                  path="/chat/:channelId"
+                  element={<ChannelSocket></ChannelSocket>}
+                ></Route>
+              </Routes>
+            </SocketProvider>
+          </div>
           <Footer />
         </div>
       </Router>

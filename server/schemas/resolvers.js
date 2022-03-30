@@ -7,7 +7,9 @@ const resolvers = {
   Query: {
     users: async (p, { username }) => {
       const params = username ? { username } : {};
-      return await User.find(params).populate('channelModel');
+      return await User.find(params)
+        .populate('channelModel')
+        .populate('friends');
     },
     singleChannel: async (p, { channelId }) => {
       return await Channel.findById({ _id: channelId })

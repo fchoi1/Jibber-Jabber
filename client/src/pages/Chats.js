@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Auth from '../utils/auth';
 import { useMutation, useQuery } from '@apollo/client';
 import { QUERY_CHANNEL_ME } from '../utils/queries';
-
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import Search from './SearchBar';
+import SearchBarUser from '../components/searchBarUser';
 import './chats.css';
 
 export default function Chats() {
+  const loggedIn = Auth.loggedIn();
+
   //const [recentChats,setChats] = useState([])
   const { loading, data } = useQuery(QUERY_CHANNEL_ME);
 
@@ -35,11 +36,13 @@ export default function Chats() {
       }
     });
   });
+
   return (
     <div className="chatContainer">
       <h2>Welcome {Auth.getProfile().data.username}</h2>
-
-      <Search />
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <SearchBarUser chats={chats}></SearchBarUser>
+      </div>
       <h4>Recent Chats:</h4>
       <div className="recentChats">
         {chats.length === 0
@@ -49,35 +52,32 @@ export default function Chats() {
               return (
                 <div className="chatBox">
                   <div className="headerContainer">
-                        <h3>{ch.channelName}</h3>
-                        <p className="created-at">Created on: {ch.createdAt}</p>
+                    <h3>{ch.channelName}</h3>
+                    <p className="created-at">Created on: {ch.createdAt}</p>
                   </div>
                   <p className="users">User(s): </p>
                   <Link
-                key={ch._id}
-                className="chatLink"
-                to={`/chat/${ch._id}`}
-              >
-                <div className="chatItemContainer">
-                
-                  <div className="chatItem">
-                    {ch.users
-                      .filter((v) => {
-                        if (v.username !== Auth.getProfile().data.username) {
-                          return v.username;
-                        }
-                      })
-                      .map((g) => {
-                        //{console.log(ch._id)}
-                        return (
-                         
-                            <div key={g._id}>{g.username}</div>
-                         
-                        );
-                      })}
-                  </div>
-                </div>
-                </Link>
+                    key={ch._id}
+                    className="chatLink"
+                    to={`/chat/${ch._id}`}
+                  >
+                    <div className="chatItemContainer">
+                      <div className="chatItem">
+                        {ch.users
+                          .filter((v) => {
+                            if (
+                              v.username !== Auth.getProfile().data.username
+                            ) {
+                              return v.username;
+                            }
+                          })
+                          .map((g) => {
+                            //{console.log(ch._id)}
+                            return <div key={g._id}>{g.username}</div>;
+                          })}
+                      </div>
+                    </div>
+                  </Link>
                 </div>
               );
             })}
