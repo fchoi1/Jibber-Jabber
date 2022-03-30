@@ -23,9 +23,12 @@ const resolvers = {
     },
     channelMe: async (p, arg, context) => {
       if (context.user) {
-        return await Channel.find({ users: { _id: context.user._id } })
+        const channelData = await Channel.find({
+          users: { _id: context.user._id }
+        })
           .populate('users')
           .populate({ path: 'messages', populate: { path: 'sender' } });
+        return channelData;
       }
       throw new AuthenticationError('Not logged in');
     },

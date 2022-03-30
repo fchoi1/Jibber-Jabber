@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Auth from '../utils/auth';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { QUERY_CHANNEL_ME } from '../utils/queries';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
@@ -10,32 +10,24 @@ import './chats.css';
 export default function Chats() {
   const loggedIn = Auth.loggedIn();
 
-  //const [recentChats,setChats] = useState([])
-  const { loading, data } = useQuery(QUERY_CHANNEL_ME);
+  const [chats, setChats] = useState([]);
 
-  // useEffect(()=>{
-  //     //console.log(search)
-  //     if(data) {
-  //         console.log("users found")
-  //     }else{
-  //         console.log("nothing found")
-  //     }
-  // })
-  if (loading) return 'Loading...';
-  //console.log(Auth.getProfile().data.username)
-  const chats = data.channelMe;
-  //   console.log(chats)
-  const r = [];
-  const rc = chats.map((c) => {
-    let g = c._id;
-    return c.users.filter((v) => {
-      //console.log(v.username)
-      if (v.username !== Auth.getProfile().data.username) {
-        return r.push(v);
-        //return v
+  //const [recentChats,setChats] = useState([])
+  const [getMyChannels, { loading, data: channelData }] =
+    useLazyQuery(QUERY_CHANNEL_ME);
+
+  useEffect(() => {
+    getMyChannels({
+      onCompleted: (channelData) => {
+        setChats(channelData.channelMe);
       }
     });
-  });
+  }, [getMyChannels]);
+  if (loading) return 'Loading...';
+  //console.log(Auth.getProfile().data.username)
+  // const chats = channelData?.channelMe;
+
+  console.log(chats);
 
   return (
     <div className="chatContainer">
@@ -48,14 +40,12 @@ export default function Chats() {
         {chats.length === 0
           ? 'No chats at the moment'
           : chats.map((ch) => {
-              console.log('channels: ', ch);
               return (
-                <div className="chatBox">
+                <div key={ch._id} className="chatBox">
                   <div className="headerContainer">
                     <h3>{ch.channelName}</h3>
                     <p className="created-at">Created on: {ch.createdAt}</p>
                   </div>
-                  <p className="users">User(s): </p>
                   <Link
                     key={ch._id}
                     className="chatLink"
@@ -63,18 +53,14 @@ export default function Chats() {
                   >
                     <div className="chatItemContainer">
                       <div className="chatItem">
-                        {ch.users
-                          .filter((v) => {
-                            if (
-                              v.username !== Auth.getProfile().data.username
-                            ) {
-                              return v.username;
-                            }
-                          })
-                          .map((g) => {
-                            //{console.log(ch._id)}
-                            return <div key={g._id}>{g.username}</div>;
-                          })}
+                        {ch.users.map((g) => {
+                          //{console.log(ch._id)}
+                          return g._id === Auth.getProfile().data._id ? (
+                            <div key={g._id}> </div>
+                          ) : (
+                            <div key={g._id}>{g.username}</div>
+                          );
+                        })}
                       </div>
                     </div>
                   </Link>
