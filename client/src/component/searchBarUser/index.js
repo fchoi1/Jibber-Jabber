@@ -4,12 +4,15 @@ import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ALL_USERS } from "../../utils/queries";
 import { CREATE_CHANNEL } from "../../utils/mutations";
 import { useNavigate } from "react-router-dom";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 import Auth from "../../utils/auth";
 
 function SearchBarUser(props) {
   const [value, setValue] = useState("");
   const [userList, setUserList] = useState([]);
+
+  const [showUserList, setShowUserlist] = useState(false);
 
   const currentUserId = Auth.getProfile().data._id;
   const currentUsername = Auth.getProfile().data.username;
@@ -30,6 +33,8 @@ function SearchBarUser(props) {
 
   const handleChange = (e) => {
     e.preventDefault();
+    setShowUserlist(true);
+
     setValue(e.target.value);
     const filtered = users.filter((user) => {
       return user.username.includes(e.target.value) || e.target.value === "";
@@ -65,32 +70,45 @@ function SearchBarUser(props) {
         channelName: `${currentUsername} and ${username}`,
       },
     });
+
     const newChannelId = newChannel.data.createChannel._id;
     console.log("new channel created", newChannelId);
 
     return navigate(`/chat/${newChannelId}`);
   };
 
+  console.log(showUserList);
+
+
+  const hideList = () => {
+    setShowUserlist(false);
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
-      <TextField value={value} onChange={handleChange} />;
-      <List>
-        {userList &&
-          userList.map((u) => (
-            <ListItem key={u._id}>
-              <Button
-                data-userid={u._id}
-                onClick={handleUserClick}
-                value={u.username}
-              >
-                {u.username}
-              </Button>
-            </ListItem>
-          ))}
-      </List>
-    </div>
+    <ClickAwayListener onClickAway={hideList}>
+      <div>
+        <TextField value={value} onChange={handleChange} />
+
+        {showUserList && (
+          <List>
+            {userList &&
+              userList.map((u) => (
+                <ListItem key={u._id}>
+                  <Button
+                    data-userid={u._id}
+                    onClick={handleUserClick}
+                    value={u.username}
+                  >
+                    {u.username}
+                  </Button>
+                </ListItem>
+              ))}
+          </List>
+        )}
+      </div>
+    </ClickAwayListener>
   );
 }
 
