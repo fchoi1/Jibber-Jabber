@@ -2,12 +2,10 @@
   border: 1px white solid;
   border-radius: 12px;
 
-
   display: flex;
   flex-direction: column;
 
   padding: 1rem;
-
 }
 
 .chatContainer h2 {
@@ -40,5 +38,8 @@
   color: white;
   font-size: 1.5rem;
   margin-right: 1rem;
+}
 
+.searchUsers {
+  color: white !important;
 }

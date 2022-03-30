@@ -1,7 +1,12 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 
 //Material UI
-import { Box, Button, Container, TextField } from '@mui/material';
+import { Box, Button, Container, Grid, TextField, Paper } from '@mui/material';
+import { withStyles } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import Typography from '@material-ui/core/Typography';
+
 import SendIcon from '@mui/icons-material/Send';
 import Message from '../components/Message';
 
@@ -11,12 +16,26 @@ import { SEND_MESSAGE } from '../utils/mutations';
 import { useLazyQuery, useMutation } from '@apollo/client';
 
 import auth from '../utils/auth';
+import { useSocket } from '../contexts/socket';
+
+const GreyTextTypography = withStyles({
+  root: {
+    color: 'gray'
+  }
+})(Typography);
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#ffffff'
+    }
+  }
+});
 
 // Css
 // import './channel.css';
 
 // SocketIO
-import { useSocket } from '../contexts/socket';
 
 const Channel = (props) => {
   const currUser = auth.getProfile().data; // get current user logged in
@@ -26,9 +45,8 @@ const Channel = (props) => {
   const { channelId } = useParams(); // get channel ID
 
   //get channel data from query
-  const [getChannel, { loading, data: channelData }] = useLazyQuery(
-    QUERY_CHANNEL
-  );
+  const [getChannel, { loading, data: channelData }] =
+    useLazyQuery(QUERY_CHANNEL);
 
   const [sendMessage, { error }] = useMutation(SEND_MESSAGE);
 
@@ -93,6 +111,14 @@ const Channel = (props) => {
     }
   };
 
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behaviour: 'smooth' });
+    }
+  }, [messageList]);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -100,52 +126,97 @@ const Channel = (props) => {
   return (
     <Box className="box">
       {/* name of channel */}
-      <h1>{channelName}</h1>
+      <h2>{channelName}</h2>
       {/* map through all users to display their names */}
-      <div>
+      <Grid container spacing={2}>
+        <Grid item xs="auto">
+          <h3>Users:</h3>
+        </Grid>
+
         {users.map((user) => (
-          <div key={user._id}>{user.username}</div>
+          <Grid
+            item
+            xs="auto"
+            sx={{
+              diplay: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <GreyTextTypography
+              variant="h5"
+              sx={{ padding: 0, margin: 0 }}
+              key={user._id}
+            >
+              {user.username === currUser.username ? 'You' : user.username}
+            </GreyTextTypography>
+          </Grid>
         ))}
-      </div>
+      </Grid>
 
       <Container className="container">
-        {/* map through all messages to show their content */}
-        <div className="chat-container">
-          {messageList.map((message) => {
-            return message.sender._id === currUser._id ? (
-              <div key={message._id} align="right" className="message">
+        <Paper
+          sx={{
+            maxHeight: '50vh',
+            overflow: 'auto',
+            backgroundColor: '#485460',
+            border: '5px solid black',
+            borderRadius: 2,
+            minHeight: '30vh'
+          }}
+        >
+          {/* map through all messages to show their content */}
+          <div className="chat-container">
+            {messageList.map((message) => {
+              return (
                 <Message
+                  key={message._id}
+                  align={message.sender._id === currUser._id ? 'right' : 'left'}
                   username={message.sender.username}
                   textContent={message.textValue}
                   createdAt={message.createdAt}
                 />
-              </div>
-            ) : (
-              <div key={message._id} align="left" className="message">
-                <Message
-                  username={message.sender.username}
-                  textContent={message.textValue}
-                  createdAt={message.createdAt}
+              );
+            })}
+            <div ref={scrollRef}></div>
+          </div>
+        </Paper>
+
+        <form
+          className="textMessageForm"
+          onSubmit={handleSendMessage}
+          style={{ marginTop: '1%' }}
+        >
+          <Grid container spacing={0}>
+            <Grid item sm={11}>
+              <ThemeProvider theme={theme}>
+                <TextField
+                  inputProps={{ style: { color: 'white' } }}
+                  InputLabelProps={{
+                    style: { color: '#fff' }
+                  }}
+                  sx={{ width: '100%' }}
+                  color="primary"
+                  className="messageInput"
+                  label="send a message"
+                  onChange={onChange}
+                  value={message}
                 />
-              </div>
-            );
-          })}
-        </div>
-        <form className="textMessageForm" onSubmit={handleSendMessage}>
-          <TextField
-            className="messageInput"
-            label="send a message"
-            onChange={onChange}
-            value={message}
-          />
-          <Button
-            className="sendButton"
-            variant="contained"
-            color="primary"
-            type="submit"
-          >
-            <SendIcon />
-          </Button>
+              </ThemeProvider>
+            </Grid>
+
+            <Grid item sm={1}>
+              <Button
+                sx={{ height: '56px', width: '100%' }}
+                className="sendButton"
+                variant="contained"
+                color="primary"
+                type="submit"
+              >
+                <SendIcon />
+              </Button>
+            </Grid>
+          </Grid>
         </form>
       </Container>
     </Box>

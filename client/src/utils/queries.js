@@ -1,5 +1,4 @@
-import {gql} from '@apollo/client'
-
+import { gql } from '@apollo/client';
 
 export const QUERY_CHANNEL = gql`
   query SingleChannel($channelId: ID!) {
@@ -31,9 +30,9 @@ export const QUERY_ME = gql`
       email
       channelModel {
         _id
-        users{
-            _id
-            username
+        users {
+          _id
+          username
         }
       }
       friends {
@@ -62,6 +61,24 @@ export const QUERY_CHANNEL_ME = gql`
           username
         }
         createdAt
+      }
+    }
+  }
+`;
+
+export const QUERY_ALL_USERS = gql`
+  query queryUsers($username: String) {
+    users(username: $username) {
+      username
+      email
+      channelModel {
+        channelName
+        _id
+      }
+      _id
+      friends {
+        _id
+        username
       }
     }
   }
