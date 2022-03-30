@@ -46,7 +46,6 @@ export default function Chats() {
                     <h3>{ch.channelName}</h3>
                     <p className="created-at">Created on: {ch.createdAt}</p>
                   </div>
-                  <p className="users">User: </p>
                   <Link
                     key={ch._id}
                     className="chatLink"
