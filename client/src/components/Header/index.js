@@ -15,7 +15,10 @@ const Header = () => {
   const channelNotif = JSON.parse(localStorage.getItem('channelNotif'));
 
   useEffect(() => {
-    if (!channelNotif) setchannelNotify(false);
+    if (!channelNotif) {
+      setchannelNotify(false);
+      return;
+    }
     if (channelNotif.length > 0) setchannelNotify(true);
   });
 
