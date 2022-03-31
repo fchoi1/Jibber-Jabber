@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import {
@@ -65,9 +65,9 @@ function App() {
       <Router>
         <div id="page-container" className="mainSection">
           <div id="content-wrap">
-            <Header />
-
             <SocketProvider>
+              <Header />
+
               <Routes>
                 <Route
                   exact

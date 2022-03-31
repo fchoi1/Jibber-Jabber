@@ -1,9 +1,4 @@
-const channel = require('../models/Channel');
-
 module.exports = {
-  channelJoin: (io, socket) => {
-    socket.join('channel1');
-  },
   newChat: (io, socket) => {
     socket.on('newChat', (data) => {
       console.log('new chat', data.messageData.textValue);
@@ -19,6 +14,14 @@ module.exports = {
       const clients = io.sockets.adapter.rooms.get(channelId);
       const numClients = clients ? clients.size : 0;
       console.log(numClients, ' client(s) in room', clients);
+    });
+  },
+  channelAlert: (io, socket) => {
+    socket.on('new-chats-for-users', ({ users, channelId }) => {
+      console.log('sending alert now');
+      users.forEach((id) =>
+        socket.to(id).emit('new-chat-in-channel', channelId)
+      );
     });
   }
 };

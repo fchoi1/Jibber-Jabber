@@ -58,6 +58,17 @@ const Channel = (props) => {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
 
+  useEffect(() => {
+    const channelNotif = JSON.parse(localStorage.getItem('channelNotif'));
+    if (channelNotif) {
+      if (channelNotif.includes(channelId))
+        localStorage.setItem(
+          'channelNotif',
+          JSON.stringify(channelNotif.filter((id) => id !== channelId))
+        );
+    }
+  }, [channelId]);
+
   // load previous messages on first load
   useEffect(() => {
     console.log('calling once');
@@ -80,6 +91,7 @@ const Channel = (props) => {
       console.log('someone sent a signal a new message: ', data.textValue);
       setMessageList((oldMessages) => [...oldMessages, data]);
     });
+
     return () => socket.off('new-chat-update');
   }, [socket, getChannel]);
 
@@ -89,6 +101,8 @@ const Channel = (props) => {
 
   const handleSendMessage = async (event) => {
     event.preventDefault();
+    if (message === '') return;
+
     console.log('sending message to channel', channelId);
     const messageFormData = {
       textValue: message,
@@ -103,7 +117,18 @@ const Channel = (props) => {
       // grabs last message
       const messageData = updatedChannel.data.sendMessage.messages.at(-1);
 
+      const otherUsers = users.map((user) => {
+        if (user._id !== currUser._id) {
+          return user._id;
+        }
+      });
+      console.log(otherUsers);
+
       socket.emit('newChat', { messageData, channelId });
+      socket.emit('new-chats-for-users', {
+        users: otherUsers,
+        channelId
+      });
 
       setMessage('');
     } catch (e) {

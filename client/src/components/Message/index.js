@@ -5,7 +5,6 @@ import { Grid, ListItemText } from '@mui/material';
 const Message = (props) => {
   // extract variables from props object
   const { username, textContent, createdAt, align } = props;
-  console.log('timestamp', createdAt);
   return (
     <>
       <Grid
