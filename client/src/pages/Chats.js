@@ -43,7 +43,6 @@ export default function Chats() {
               return (
                 <div key={ch._id} className="chatBox">
                   <div className="headerContainer">
-                    <h3>{ch.channelName}</h3>
                     <p className="created-at">Created on: {ch.createdAt}</p>
                   </div>
                   <Link

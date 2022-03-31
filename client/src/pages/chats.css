@@ -25,7 +25,7 @@
   background-color: white;
 
   display: flex;
-  justify-content: space-between;
+  
   align-items: center;
   color: black;
   padding: 0.8rem;
@@ -35,16 +35,14 @@
   border-bottom-left-radius: 0;
 }
 
-.headerContainer h3 {
-  padding: 0;
-  margin: 0;
- 
-}
-.created-at {
 
+.created-at {
+  font-weight: bold;
   padding: 0;
   margin: 0;
-  text-align: center;
+  width: 100%;
+  text-align: end;
+ 
 }
 .chatBox {
   border: 1px white solid;
