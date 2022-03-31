@@ -6,10 +6,14 @@ module.exports = {
     });
   },
   joinRoom: (io, socket) => {
-    socket.on('joined a room', (channelId) => {
+    socket.on('joined a room', ({ channelId, userId }) => {
       socket.join(channelId);
 
       console.log('a client joined the room', channelId);
+      const userRoom = io.sockets.adapter.rooms.get(userId);
+      console.log(userId, ' a user in room', userRoom);
+
+      socket.emit('joined-room-response', channelId);
 
       const clients = io.sockets.adapter.rooms.get(channelId);
       const numClients = clients ? clients.size : 0;

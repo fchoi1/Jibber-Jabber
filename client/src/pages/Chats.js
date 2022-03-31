@@ -5,11 +5,13 @@ import { QUERY_CHANNEL_ME } from '../utils/queries';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import { useSocket } from '../contexts/socket';
+import { useNotifyContext } from '../contexts/notifContext';
 
 import SearchBarUser from '../components/searchBarUser';
 import './chats.css';
 
 export default function Chats() {
+  const { setchannelNotify } = useNotifyContext();
   const socket = useSocket(); //Socket context
   const loggedIn = Auth.loggedIn();
 
@@ -35,31 +37,30 @@ export default function Chats() {
   useEffect(() => {
     if (socket == null) return;
     socket.on('new-chat-in-channel', (channelId) => {
-      console.log('someone sent a message to this channel: ', channelId);
+      console.log('new chats: ', channelId);
 
       const channelNotif = JSON.parse(localStorage.getItem('channelNotif'));
-      console.log(channelNotif);
 
       if (!channelNotif) {
         localStorage.setItem('channelNotif', JSON.stringify([channelId]));
         setChannelNotifications([channelId]);
-      } else if (!channelNotif.includes(channelId)) {
+        setchannelNotify(true);
+      } else if (!channelNotifications.includes(channelId)) {
         localStorage.setItem(
           'channelNotif',
           JSON.stringify([...channelNotif, channelId])
         );
         setChannelNotifications([...channelNotif, channelId]);
+        setchannelNotify(true);
       }
     });
 
     return () => socket.off('new-chat-in-channel');
-  }, [socket, setChannelNotifications]);
+  }, [socket, setChannelNotifications, channelNotifications, setchannelNotify]);
 
   if (loading) return 'Loading...';
   //console.log(Auth.getProfile().data.username)
   // const chats = channelData?.channelMe;
-
-  console.log(chats);
 
   return (
     <div className="chatContainer">
@@ -85,7 +86,6 @@ export default function Chats() {
                     key={ch._id}
                     className="chatLink"
                     to={`/chat/${ch._id}`}
-
                   >
                     <div className="chatItemContainer">
                       <div className="chatItem">

@@ -17,6 +17,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 
 import auth from '../utils/auth';
 import { useSocket } from '../contexts/socket';
+import { useNotifyContext } from '../contexts/notifContext';
 
 // Css
 import './channel.css';
@@ -38,6 +39,8 @@ const theme = createTheme({
 // SocketIO
 
 const Channel = (props) => {
+  const { setchannelNotify } = useNotifyContext();
+
   const currUser = auth.getProfile().data; // get current user logged in
 
   const socket = useSocket(); //Socket context
@@ -58,22 +61,12 @@ const Channel = (props) => {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
 
-  useEffect(() => {
-    const channelNotif = JSON.parse(localStorage.getItem('channelNotif'));
-    if (channelNotif) {
-      if (channelNotif.includes(channelId))
-        localStorage.setItem(
-          'channelNotif',
-          JSON.stringify(channelNotif.filter((id) => id !== channelId))
-        );
-    }
-  }, [channelId]);
-
   // load previous messages on first load
   useEffect(() => {
     console.log('calling once');
 
-    if (socket) socket.emit('joined a room', channelId);
+    if (socket)
+      socket.emit('joined a room', { channelId, userId: currUser._id });
 
     getChannel({
       variables: { channelId },
@@ -83,7 +76,19 @@ const Channel = (props) => {
         setUsers(data.singleChannel.users);
       }
     });
-  }, [getChannel, channelId, socket]);
+
+    const channelNotif = JSON.parse(localStorage.getItem('channelNotif'));
+    if (!channelNotif) setchannelNotify(false);
+    if (channelNotif) {
+      const updatedNotifList = channelNotif.filter((id) => id !== channelId);
+      if (channelNotif.includes(channelId))
+        localStorage.setItem('channelNotif', JSON.stringify(updatedNotifList));
+      console.log('checking notif', channelNotif);
+
+      if (updatedNotifList.length > 0) setchannelNotify(true);
+      else setchannelNotify(false);
+    }
+  }, [getChannel, channelId, socket, currUser._id, setchannelNotify]);
 
   useEffect(() => {
     if (socket == null) return;
@@ -160,6 +165,7 @@ const Channel = (props) => {
 
         {users.map((user) => (
           <Grid
+            key={user._id}
             item
             xs="auto"
             sx={{

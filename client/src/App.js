@@ -32,6 +32,8 @@ import Auth from './utils/auth';
 // Socket IO
 // import { SocketContext, socket } from './context/socket';
 import { SocketProvider } from './contexts/socket';
+import { NotifyProvider } from './contexts/notifContext';
+
 import Chats from './pages/Chats';
 
 let e_string = '';
@@ -66,39 +68,42 @@ function App() {
         <div id="page-container" className="mainSection">
           <div id="content-wrap">
             <SocketProvider>
-              <Header />
-
-              <Routes>
-                <Route
-                  exact
-                  path="/"
-                  element={<WelcomePage></WelcomePage>}
-                ></Route>
-                <Route exact path="/" element={<Home></Home>} />
-                {Auth.loggedIn() ? (
-                  <>
-                    <Route exact path="/dashboard" element={<Chats></Chats>} />
-                    <Route
-                      exact
-                      path="/channel"
-                      element={<Channel></Channel>}
-                    />{' '}
-                  </>
-                ) : (
-                  <>
-                    <Route exact path="/signup" element={<Signup></Signup>} />
-                    <Route exact path="/login" element={<Login></Login>} />{' '}
-                  </>
-                )}
-
-                <Route exact path="*" element={<NotFound></NotFound>} />
-
-                <Route
-                  exact
-                  path="/chat/:channelId"
-                  element={<ChannelSocket></ChannelSocket>}
-                ></Route>
-              </Routes>
+              <NotifyProvider>
+                <Header />
+                <Routes>
+                  <Route
+                    exact
+                    path="/"
+                    element={<WelcomePage></WelcomePage>}
+                  ></Route>
+                  <Route exact path="/" element={<Home></Home>} />
+                  {Auth.loggedIn() ? (
+                    <>
+                      <Route
+                        exact
+                        path="/dashboard"
+                        element={<Chats></Chats>}
+                      />
+                      <Route
+                        exact
+                        path="/channel"
+                        element={<Channel></Channel>}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Route exact path="/signup" element={<Signup></Signup>} />
+                      <Route exact path="/login" element={<Login></Login>} />
+                    </>
+                  )}
+                  <Route exact path="*" element={<NotFound></NotFound>} />
+                  <Route
+                    exact
+                    path="/chat/:channelId"
+                    element={<ChannelSocket></ChannelSocket>}
+                  ></Route>
+                </Routes>
+              </NotifyProvider>
             </SocketProvider>
           </div>
           <Footer />

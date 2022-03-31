@@ -1,33 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../../utils/auth';
 import image from '../../assets/jj(header).png';
 import { useSocket } from '../../contexts/socket';
-
+import { useNotifyContext } from '../../contexts/notifContext';
 import './header.css';
 
 const Header = () => {
-  const socket = useSocket();
-  console.log('header socket', socket);
+  const socket = useSocket(); //Socket context
+  console.log('header socket id', socket?.id);
+  const { channelNotify, setchannelNotify } = useNotifyContext();
+  console.log('context channel', channelNotify);
+
+  const channelNotif = JSON.parse(localStorage.getItem('channelNotif'));
 
   useEffect(() => {
-    if (socket == null) return;
-    socket.on('new-chat-in-channel', (channelId) => {
-      console.log('someone sent a message to this channel: ', channelId);
+    if (!channelNotif) setchannelNotify(false);
+    if (channelNotif.length > 0) setchannelNotify(true);
+  });
 
-      const channelNotif = JSON.parse(localStorage.getItem('channelNotif'));
-
-      if (!channelNotif)
-        localStorage.setItem('channelNotif', JSON.stringify([channelId]));
-      else if (!channelNotif.includes(channelId)) {
-        localStorage.setItem(
-          'channelNotif',
-          JSON.stringify([...channelNotif, channelId])
-        );
-      }
-    });
-    return () => socket.off('new-chat-in-channel');
-  }, [socket]);
+  // const [channelNotify, setchannelNotify] = useState(false);
 
   const loggedIn = Auth.loggedIn();
 
@@ -55,6 +47,7 @@ const Header = () => {
           </>
         )}
       </nav>
+      {channelNotify && <div>New Un-read chats!</div>}
     </header>
   );
 };
