@@ -86,7 +86,7 @@ export default function Login(){
             disabled={!(userFormData.email && userFormData.password)}
             type='submit'
             variant='success'>
-            Submite
+            Submit
           </Button>
         </Form>
         {error && <div>Login failed</div>}

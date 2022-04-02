@@ -59,7 +59,6 @@ function SearchBarUser(props) {
 
   // check if convo exist between user
   const handleUserClick = async (e) => {
-    console.log('clicked');
     const userId = e.target.dataset.userid;
     const username = e.target.value;
 
@@ -68,10 +67,8 @@ function SearchBarUser(props) {
         (u) => u._id === currentUserId || u._id === userId
       );
 
-      console.log(chats[i].users, checkuserlist);
       if (chats[i].users.length === 2 && checkuserlist.length === 2) {
         // previous chat exists redirect
-        console.log('old chat exists', chats[i]._id);
         return navigate(`/chat/${chats[i]._id}`);
       }
     }
@@ -85,12 +82,10 @@ function SearchBarUser(props) {
     });
 
     const newChannelId = newChannel.data.createChannel._id;
-    console.log('new channel created', newChannelId);
 
     return navigate(`/chat/${newChannelId}`);
   };
 
-  console.log(showUserList);
 
   const hideList = () => {
     setShowUserlist(false);

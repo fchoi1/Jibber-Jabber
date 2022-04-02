@@ -11,7 +11,7 @@ const app = express();
 // Socket Server
 const httpServer = require('http').createServer(app);
 const socketio = require('socket.io');
-const { newChat, joinRoom } = require('./socketFunctions');
+const { newChat, joinRoom, channelAlert } = require('./socketFunctions');
 
 // Attach socket.io to the server instance
 const io = socketio(httpServer, {
@@ -23,14 +23,17 @@ const io = socketio(httpServer, {
 
 io.on('connection', (socket) => {
   /* socket object may be used to send specific messages to the new connected client */
-  console.log('new client connected', socket.id);
 
   const id = socket.handshake.query.id;
+  console.log('new client connected and added to room', id);
+
+  socket.join(id);
 
   socket.emit('connection', null);
 
   newChat(io, socket);
   joinRoom(io, socket);
+  channelAlert(io, socket);
 
   socket.on('disconnect', function () {
     //do stuff

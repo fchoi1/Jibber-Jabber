@@ -4,17 +4,27 @@ import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { QUERY_CHANNEL_ME } from '../utils/queries';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
+import { useSocket } from '../contexts/socket';
+import { useNotifyContext } from '../contexts/notifContext';
+
 import SearchBarUser from '../components/searchBarUser';
 import './chats.css';
 
 export default function Chats() {
+  const { setchannelNotify } = useNotifyContext();
+  const socket = useSocket(); //Socket context
   const loggedIn = Auth.loggedIn();
 
   const [chats, setChats] = useState([]);
+  const [channelNotifications, setChannelNotifications] = useState([]);
 
   //const [recentChats,setChats] = useState([])
-  const [getMyChannels, { loading, data: channelData }] =
-    useLazyQuery(QUERY_CHANNEL_ME);
+  const [getMyChannels, { loading, data }] = useLazyQuery(QUERY_CHANNEL_ME);
+
+  useEffect(() => {
+    const channelNotif = JSON.parse(localStorage.getItem('channelNotif'));
+    if (channelNotif) setChannelNotifications(channelNotif);
+  }, []);
 
   useEffect(() => {
     getMyChannels({
@@ -23,11 +33,34 @@ export default function Chats() {
       }
     });
   }, [getMyChannels]);
+
+  useEffect(() => {
+    if (socket == null) return;
+    socket.on('new-chat-in-channel', (channelId) => {
+      console.log('new chats: ', channelId);
+
+      const channelNotif = JSON.parse(localStorage.getItem('channelNotif'));
+
+      if (!channelNotif) {
+        localStorage.setItem('channelNotif', JSON.stringify([channelId]));
+        setChannelNotifications([channelId]);
+        setchannelNotify(true);
+      } else if (!channelNotifications.includes(channelId)) {
+        localStorage.setItem(
+          'channelNotif',
+          JSON.stringify([...channelNotif, channelId])
+        );
+        setChannelNotifications([...channelNotif, channelId]);
+        setchannelNotify(true);
+      }
+    });
+
+    return () => socket.off('new-chat-in-channel');
+  }, [socket, setChannelNotifications, channelNotifications, setchannelNotify]);
+
   if (loading) return 'Loading...';
   //console.log(Auth.getProfile().data.username)
   // const chats = channelData?.channelMe;
-
-  console.log(chats);
 
   return (
     <div className="chatContainer">
@@ -45,6 +78,9 @@ export default function Chats() {
                   <div className="headerContainer">
                     <p className="created-at">Created on: {ch.createdAt}</p>
                   </div>
+                  {channelNotifications.includes(ch._id) && (
+                    <div>There's a new Chat</div>
+                  )}
                   <Link
                     key={ch._id}
                     className="chatLink"
