@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import { validateEmail } from '../../utils/helpers';
 
 import { useMutation } from '@apollo/client';
-import { Mutation_signup  } from '../../utils/mutations';
-import Auth from "../../utils/auth"
-import {Link} from 'react-router-dom'
+import { Mutation_signup } from '../../utils/mutations';
+import Auth from '../../utils/auth';
+import { Link } from 'react-router-dom';
 
 // Main logic function
 const Signup = () => {
@@ -17,7 +17,7 @@ const Signup = () => {
   });
 
   const { username, email, password } = formState;
-  const [addUser, { error }] = useMutation(Mutation_signup );
+  const [addUser, { error }] = useMutation(Mutation_signup);
 
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -39,10 +39,8 @@ const Signup = () => {
         setErrorMessage('');
       }
     }
-    //if all input values are validated set formState
-    if (!errorMessage) {
-      setFormState({ ...formState, [name]: value });
-    }
+
+    setFormState({ ...formState, [name]: value });
   }
 
   // submit form (notice the async!)
@@ -58,11 +56,18 @@ const Signup = () => {
         const { data } = await addUser({
           variables: { ...formState }
         });
-        Auth.login(data.addUser.token)
+        Auth.login(data.addUser.token);
         console.log(data);
       } catch (e) {
         console.error(e);
       }
+
+      // clear form values
+      setFormState({
+        username: '',
+        email: '',
+        password: ''
+      });
     }
   };
 
@@ -79,8 +84,8 @@ const Signup = () => {
             type="username"
             id="username"
             placeholder="Username"
-            defaultValue={username}
-            onBlur={handleChange}
+            value={username}
+            onChange={handleChange}
             minLength="4"
           />
         </div>
@@ -91,8 +96,8 @@ const Signup = () => {
             type="email"
             id="email"
             placeholder="Email"
-            defaultValue={email}
-            onBlur={handleChange}
+            value={email}
+            onChanger={handleChange}
           />
         </div>
 
@@ -104,8 +109,8 @@ const Signup = () => {
             type="password"
             id="password"
             placeholder="******"
-            defaultValue={password}
-            onBlur={handleChange}
+            value={password}
+            onChange={handleChange}
             minLength="4"
           />
         </div>
@@ -120,7 +125,9 @@ const Signup = () => {
           <button className="signup-form-btn" type="submit">
             Sign Up
           </button>
-          <Link className="login-link" to="/login">Login instead</Link>
+          <Link className="login-link" to="/login">
+            Login instead
+          </Link>
         </div>
       </form>
       {error && <div>Sign up failed</div>}

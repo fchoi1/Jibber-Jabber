@@ -17,7 +17,6 @@ const Login = (props) => {
   // Updates based on form input changes.
   const handleFormChange = (event) => {
     const { name, value } = event.target;
-
     if (name === 'email') {
       const isValid = validateEmail(value);
       if (!isValid) {
@@ -33,12 +32,12 @@ const Login = (props) => {
       }
     }
 
-    if (!errorMessage) {
+    
       setFormState({
         ...formState,
         [name]: value
       });
-    }
+      console.log(formState)
   };
 
   // Submit form
@@ -75,8 +74,8 @@ const Login = (props) => {
             type="email"
             id="email"
             placeholder="Email"
-            defaultValue={email}
-            onBlur={handleFormChange}
+            value={email}
+            onChange={handleFormChange}
           />
         </div>
 
@@ -88,8 +87,8 @@ const Login = (props) => {
             type="password"
             id="password"
             placeholder="******"
-            defaultValue={password}
-            onBlur={handleFormChange}
+            value={password}
+            onChange={handleFormChange}
           />
         </div>
 
