@@ -48,10 +48,10 @@ const Channel = (props) => {
   const { channelId } = useParams(); // get channel ID
 
   //get channel data from query
-  const [getChannel, { loading, data: channelData }] =
+  const [getChannel, { loading}] =
     useLazyQuery(QUERY_CHANNEL);
 
-  const [sendMessage, { error }] = useMutation(SEND_MESSAGE);
+  const [sendMessage] = useMutation(SEND_MESSAGE);
 
   // for the send message form
   const [users, setUsers] = useState([]);
@@ -126,6 +126,7 @@ const Channel = (props) => {
         if (user._id !== currUser._id) {
           return user._id;
         }
+  
       });
       console.log(otherUsers);
 

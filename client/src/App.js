@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import {
@@ -17,7 +17,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import WelcomePage from './components/WelcomePage';
 import NotFound from './pages/notFound';
-import PC from './pages/PC';
+
 
 // CSS
 import './App.css';

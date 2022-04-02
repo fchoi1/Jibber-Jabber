@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Auth from '../utils/auth';
-import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { QUERY_CHANNEL_ME } from '../utils/queries';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import {  Link } from 'react-router-dom';
 
 import { useSocket } from '../contexts/socket';
 import { useNotifyContext } from '../contexts/notifContext';
@@ -13,13 +13,12 @@ import './chats.css';
 export default function Chats() {
   const { setchannelNotify } = useNotifyContext();
   const socket = useSocket(); //Socket context
-  const loggedIn = Auth.loggedIn();
-
+ 
   const [chats, setChats] = useState([]);
   const [channelNotifications, setChannelNotifications] = useState([]);
 
   //const [recentChats,setChats] = useState([])
-  const [getMyChannels, { loading, data }] = useLazyQuery(QUERY_CHANNEL_ME);
+  const [getMyChannels, { loading}] = useLazyQuery(QUERY_CHANNEL_ME);
 
   useEffect(() => {
     const channelNotif = JSON.parse(localStorage.getItem('channelNotif'));
@@ -76,6 +75,7 @@ export default function Chats() {
               return (
                 <div key={ch._id} className="chatBox">
                   <div className="headerContainer">
+                    <p>{ch.channelName}</p>
                     <p className="created-at">Created on: {ch.createdAt}</p>
                   </div>
                   {channelNotifications.includes(ch._id) && (
@@ -88,14 +88,7 @@ export default function Chats() {
                   >
                     <div className="chatItemContainer">
                       <div className="chatItem">
-                        {ch.users.map((g) => {
-                          //{console.log(ch._id)}
-                          return g._id === Auth.getProfile().data._id ? (
-                            <div key={g._id}> </div>
-                          ) : (
-                            <div key={g._id}>{g.username}</div>
-                          );
-                        })}
+                       <p>Click here to open chat</p>
                       </div>
                     </div>
                   </Link>

@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import Auth from '../utils/auth';
 import { useMutation, useQuery } from '@apollo/client';
-import { Query_Channel, Query_Me, QUERY_Users } from '../utils/mutations';
+import { Query_Channel } from '../utils/mutations';
 
 import { Mutation_SendMessage } from '../utils/mutations';
-import { setContext } from '@apollo/client/link/context';
+
 import {
   useParams,
-  BrowserRouter as Router,
-  Route,
-  Link
+ 
 } from 'react-router-dom';
 
 export default function PC() {
@@ -17,7 +15,7 @@ export default function PC() {
   console.log(channelId, friendId);
   const senderId = Auth.getProfile().data._id;
 
-  const { loading, data, refetch } = useQuery(Query_Channel, {
+  const {  data, refetch } = useQuery(Query_Channel, {
     variables: { id: channelId }
   });
 

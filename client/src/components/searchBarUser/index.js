@@ -28,7 +28,7 @@ function SearchBarUser(props) {
   const currentUserId = Auth.getProfile().data._id;
   const currentUsername = Auth.getProfile().data.username;
 
-  const [createChannel, { error }] = useMutation(CREATE_CHANNEL);
+  const [createChannel] = useMutation(CREATE_CHANNEL);
 
   let navigate = useNavigate();
 
@@ -77,7 +77,7 @@ function SearchBarUser(props) {
     const newChannel = await createChannel({
       variables: {
         users: [{ _id: userId }],
-        channelName: `${currentUsername} and ${username}`
+        channelName: `${username}`
       }
     });
 
