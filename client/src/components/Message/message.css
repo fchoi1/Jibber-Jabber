@@ -1,0 +1,19 @@
+.c-container{
+   padding:0.25rem;
+  
+}
+
+.item{
+    padding: 0.6rem;
+    border-radius: 12px;
+    max-width:75%;
+}
+
+.item span{
+    font-size:1.2rem;
+}
+
+
+
+
+

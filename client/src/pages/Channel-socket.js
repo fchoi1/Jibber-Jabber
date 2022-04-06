@@ -37,7 +37,6 @@ const theme = createTheme({
 });
 
 // SocketIO
-
 const Channel = (props) => {
   const { setchannelNotify } = useNotifyContext();
 
@@ -157,44 +156,15 @@ const Channel = (props) => {
   return (
     <Box className="box">
       {/* name of channel */}
-      <h2>{channelName}</h2>
-      {/* map through all users to display their names */}
-      <Grid container spacing={2}>
-        <Grid item xs="auto">
-          <h3>Users:</h3>
-        </Grid>
+      <h2>Chatting with {channelName.toUpperCase()}</h2>
 
-        {users.map((user) => (
-          <Grid
-            key={user._id}
-            item
-            xs="auto"
-            sx={{
-              diplay: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <GreyTextTypography
-              variant="h5"
-              sx={{ padding: 0, margin: 0 }}
-              key={user._id}
-            >
-              {user.username === currUser.username ? 'You' : user.username}
-            </GreyTextTypography>
-          </Grid>
-        ))}
-      </Grid>
-
-      <Container className="container">
+      <container>
         <Paper
           sx={{
             maxHeight: '50vh',
             overflow: 'auto',
-            backgroundColor: '#485460',
-            border: '5px solid black',
-            borderRadius: 2,
-            minHeight: '30vh'
+            minHeight: '30vh',
+            border:'5px black solid'
           }}
         >
           {/* map through all messages to show their content */}
@@ -251,7 +221,7 @@ const Channel = (props) => {
             </Grid>
           </Grid>
         </form>
-      </Container>
+      </container>
     </Box>
   );
 };

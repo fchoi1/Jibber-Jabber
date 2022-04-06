@@ -75,7 +75,7 @@ export default function Chats() {
               return (
                 <div key={ch._id} className="chatBox">
                   <div className="headerContainer">
-                    <p>{ch.channelName}</p>
+                    <h4 className="channel-name">{(ch.channelName).toUpperCase()}</h4>
                     <p className="created-at">Created on: {ch.createdAt}</p>
                   </div>
                   {channelNotifications.includes(ch._id) && (

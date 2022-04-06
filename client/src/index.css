@@ -72,7 +72,8 @@ code {
 }
 
 .login-link {
-  color: red;
+  color: white;
+  text-decoration: underline;
   width: 50%;
   text-align: center;
   font-size: 1.2rem;

@@ -20,12 +20,12 @@ export default function WelcomePage() {
   return (
     <div className="welcome-div">
       <h1>Welcome</h1>
-      {loggedIn && data ? <h1>{data.me.username}</h1> : null}
+      {loggedIn && data ? <h2>{data.me.username}</h2> : null}
       <button>
         {loggedIn ? (
           <Link to="/dashboard">Dashboard</Link>
         ) : (
-          <Link to="/signup">Signup / Login</Link>
+          <Link to="/signup">Get Started</Link>
         )}
       </button>
     </div>

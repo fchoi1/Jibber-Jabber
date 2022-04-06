@@ -10,5 +10,10 @@
 
 .welcome-div button{
     padding: 1rem;
- 
+    border:none;
+    border-radius: 12px;
+}
+
+.welcome-div button a{
+    color: #1e272e;
 }

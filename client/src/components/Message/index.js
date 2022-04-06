@@ -2,34 +2,30 @@ import React from 'react';
 import Moment from 'react-moment';
 import { Grid, ListItemText } from '@mui/material';
 
-const Message = (props) => {
+import './message.css'
+
+
+const Message = (props) => { 
   // extract variables from props object
   const { username, textContent, createdAt, align } = props;
   return (
     <>
       <Grid
-        container
+      className="c-container"
         sx={{
-          paddingLeft: '1%',
-          paddingRight: '1%',
           display: 'flex',
           justifyContent: align === 'left' ? 'flex-start' : 'flex-end'
         }}
       >
         <Grid
-          item
-          xs="auto"
-          align={align}
+        className="item"
           sx={{
-            padding: align === 'left' ? '0.4% 3% 0.4% 1%' : '0.4% 1% 0.4% 3%',
-            margin: '0.4%',
-            border: '1px dashed gray',
-            borderRadius: 4,
-            fontSize: 'small'
+            color:'white',
+            backgroundColor: align === 'left' ? '#43CC47': '#1982FC'
           }}
         >
-          <ListItemText primary={textContent} sx={{ margin: 0 }}></ListItemText>
-          <h6 style={{ margin: 0 }}>{align === 'left' ? username : 'You'}</h6>
+          <span id="textMessage">{textContent}</span>
+          <p className="sentBy"style={{ margin: 0 }}>{align === 'left' ? username : 'You'}</p>
           <Moment
             parse="MMM Do, YYYY at LT"
             fromNow
