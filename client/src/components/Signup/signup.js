@@ -97,7 +97,7 @@ const Signup = () => {
             id="email"
             placeholder="Email"
             value={email}
-            onChanger={handleChange}
+            onChange={handleChange}
           />
         </div>
 
