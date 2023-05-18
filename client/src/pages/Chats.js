@@ -36,7 +36,6 @@ export default function Chats() {
   useEffect(() => {
     if (socket == null) return;
     socket.on('new-chat-in-channel', (channelId) => {
-      console.log('new chats: ', channelId);
 
       const channelNotif = JSON.parse(localStorage.getItem('channelNotif'));
 
@@ -58,8 +57,6 @@ export default function Chats() {
   }, [socket, setChannelNotifications, channelNotifications, setchannelNotify]);
 
   if (loading) return 'Loading...';
-  //console.log(Auth.getProfile().data.username)
-  // const chats = channelData?.channelMe;
 
   return (
     <div className="chatContainer">

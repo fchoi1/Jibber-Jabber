@@ -26,16 +26,13 @@ export default function Register(props){
      e.preventDefault();
      try {
       const response = await signupUser({variables:userFormData})
-      console.log(response.data.addUser)
       if (!response.data.addUser) {
           throw new Error('something went wrong!');
       }
   
-        const { token, user } = response.data.addUser;
-        console.log(user);
+        const { token } = response.data.addUser;
         Auth.login(token);
       } catch (err) {
-        console.error(err);
         setShowAlert(true);
       }
   

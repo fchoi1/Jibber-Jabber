@@ -37,7 +37,6 @@ const Login = (props) => {
         ...formState,
         [name]: value
       });
-      console.log(formState)
   };
 
   // Submit form
@@ -48,9 +47,7 @@ const Login = (props) => {
       const { data } = await login({
         variables: { ...formState }
       });
-      //add token to localstorage
       Auth.login(data.login.token)
-      console.log(data);
     } catch (e) {
       console.error(e);
     }

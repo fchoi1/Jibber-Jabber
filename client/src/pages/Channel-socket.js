@@ -62,7 +62,6 @@ const Channel = (props) => {
 
   // load previous messages on first load
   useEffect(() => {
-    console.log('calling once');
 
     if (socket)
       socket.emit('joined a room', { channelId, userId: currUser._id });
@@ -82,8 +81,6 @@ const Channel = (props) => {
       const updatedNotifList = channelNotif.filter((id) => id !== channelId);
       if (channelNotif.includes(channelId))
         localStorage.setItem('channelNotif', JSON.stringify(updatedNotifList));
-      console.log('checking notif', channelNotif);
-
       if (updatedNotifList.length > 0) setchannelNotify(true);
       else setchannelNotify(false);
     }
@@ -92,7 +89,6 @@ const Channel = (props) => {
   useEffect(() => {
     if (socket == null) return;
     socket.on('new-chat-update', (data) => {
-      console.log('someone sent a signal a new message: ', data.textValue);
       setMessageList((oldMessages) => [...oldMessages, data]);
     });
 
@@ -106,8 +102,6 @@ const Channel = (props) => {
   const handleSendMessage = async (event) => {
     event.preventDefault();
     if (message === '') return;
-
-    console.log('sending message to channel', channelId);
     const messageFormData = {
       textValue: message,
       senderId: currUser._id,
@@ -127,7 +121,6 @@ const Channel = (props) => {
         }
   
       });
-      console.log(otherUsers);
 
       socket.emit('newChat', { messageData, channelId });
       socket.emit('new-chats-for-users', {

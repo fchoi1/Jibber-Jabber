@@ -18,7 +18,6 @@ export function SocketProvider({ children }) {
 
   useEffect(() => {
     if (!auth.loggedIn()) {
-      console.log('Not logged in');
       return children;
     }
 

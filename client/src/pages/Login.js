@@ -29,8 +29,7 @@ export default function Login(){
            throw new Error('something went wrong!');
        }
    
-         const { token, user } = response.data.login;
-         console.log(user);
+         const { token } = response.data.login;
          Auth.login(token);
        } catch (err) {
          console.error(err);

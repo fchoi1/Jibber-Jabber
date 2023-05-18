@@ -11,8 +11,7 @@ import {
 } from 'react-router-dom';
 
 export default function PC() {
-  const { channelId, friendId } = useParams();
-  console.log(channelId, friendId);
+  const { channelId } = useParams();
   const senderId = Auth.getProfile().data._id;
 
   const {  data, refetch } = useQuery(Query_Channel, {
@@ -20,7 +19,6 @@ export default function PC() {
   });
 
   setInterval(() => {
-    //console.log("working")
     refetch();
   }, 2000);
 
@@ -33,7 +31,6 @@ export default function PC() {
   };
   async function sendMessage(e) {
     e.preventDefault();
-    console.log(msg);
 
     //we can send the message now
     try {
@@ -44,16 +41,10 @@ export default function PC() {
       }
     } catch (err) {
       console.error(err);
-      //setShowAlert(true);
     }
-
-    //set the msg back to " "
     setMessage('');
   }
 
-  if (data) {
-    console.log(data.channel.messages);
-  }
   return (
     <div className="border border-dark m-4">
       {data

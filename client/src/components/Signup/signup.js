@@ -52,12 +52,10 @@ const Signup = () => {
       // use try/catch instead of promises to handle errors
       try {
         // execute addUser mutation and pass in variable data from form
-        console.log(formState);
         const { data } = await addUser({
           variables: { ...formState }
         });
         Auth.login(data.addUser.token);
-        console.log(data);
       } catch (e) {
         console.error(e);
       }

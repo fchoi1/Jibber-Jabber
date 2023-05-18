@@ -25,7 +25,6 @@ io.on('connection', (socket) => {
   /* socket object may be used to send specific messages to the new connected client */
 
   const id = socket.handshake.query.id;
-  console.log('new client connected and added to room', id);
 
   socket.join(id);
 
@@ -37,7 +36,6 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', function () {
     //do stuff
-    console.log('a client has disconnected');
   });
 });
 
@@ -77,7 +75,6 @@ app.get('*', (req, res) => {
 });
 
 db.once('open', () => {
-  // app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));
   httpServer.listen({ port: process.env.PORT || 3001 }, () =>
     console.log(`Socket Server is running on ${PORT}`)
   );

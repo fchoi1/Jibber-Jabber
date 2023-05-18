@@ -2,15 +2,11 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../../utils/auth';
 import image from '../../assets/jj(header).png';
-import { useSocket } from '../../contexts/socket';
 import { useNotifyContext } from '../../contexts/notifContext';
 import './header.css';
 
 const Header = () => {
-  const socket = useSocket(); //Socket context
-  console.log('header socket id', socket?.id);
   const { channelNotify, setchannelNotify } = useNotifyContext();
-  console.log('context channel', channelNotify);
 
   const channelNotif = JSON.parse(localStorage.getItem('channelNotif'));
 
@@ -21,8 +17,6 @@ const Header = () => {
     }
     if (channelNotif.length > 0) setchannelNotify(true);
   });
-
-  // const [channelNotify, setchannelNotify] = useState(false);
 
   const loggedIn = Auth.loggedIn();
 

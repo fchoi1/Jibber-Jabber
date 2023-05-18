@@ -1,5 +1,4 @@
 import React from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './footer.css';
 import { SocialIcon } from 'react-social-icons';
@@ -10,16 +9,16 @@ function DisplayFooter() {
       className="bg-dark text-center d-flex footer justify-content-center"
     >
       <div className="m-2">
-        <SocialIcon url="https://twitter.com/karansodhi" />
+        <SocialIcon url="mailto:fchoi@outlook.com" />
       </div>
       <div className="m-2">
-        <SocialIcon url="https://facebook.com/karan.sodhi" />
+        <SocialIcon url="https://fabio-portfolio.herokuapp.com/" />
       </div>
       <div className="m-2">
-        <SocialIcon url="https://google.com/karan.sodhi" />
+        <SocialIcon url="https://www.linkedin.com/in/fabio-choi-6a325676/" />
       </div>
       <div className="m-2">
-        <SocialIcon url="https://github.com/jaketrent" />
+        <SocialIcon url="https://github.com/fchoi1/Jibber-Jabber" />
       </div>
     </footer>
   );

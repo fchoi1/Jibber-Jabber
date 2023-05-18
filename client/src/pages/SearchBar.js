@@ -3,7 +3,6 @@ import React from "react";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Mutation_findUser } from "../utils/mutations";
-import { asyncMap } from "@apollo/client/utilities";
 
 export default function Search(){
 
@@ -17,11 +16,9 @@ export default function Search(){
                     if (!response.data.findUser) {
                         throw new Error('something went wrong!');
                     }else{
-                        console.log("lets see")
                     }
                 
                     } catch (err) {
-                      console.error(err);
                       //setShowAlert(true);
                     }
     }

@@ -41,8 +41,6 @@ const ChatListItem = (props) => {
 
   const usersList = channel.users.filter((user) => user.name !== currUser);
 
-  console.log(usersList);
-
   return (
     <ListItem className={'sub-section'} alignItems="flex-start">
       <AvatarGroup max={4} sx={{ pr: 1 }}>
